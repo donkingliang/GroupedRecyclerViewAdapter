@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">GroupedRecyclerViewAdapter</string>
+
+    <string name="group_list">分组的列表</string>
+    <string name="no_header">不带组头的列表</string>
+    <string name="no_footer">不带组尾的列表</string>
+    <string name="grid_children_1">子项为Grid的列表</string>
+    <string name="grid_children_2">子项为Grid的列表(各组子项的Span不同)</string>
+    <string name="expandable">可展开收起的列表</string>
+    <string name="various">头、尾和子项都支持多种类型的列表</string>
+    <string name="various_child">多种子项类型的列表</string>
+
 </resources>
