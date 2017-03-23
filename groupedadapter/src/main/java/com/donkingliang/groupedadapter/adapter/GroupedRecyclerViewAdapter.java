@@ -245,8 +245,7 @@ public abstract class GroupedRecyclerViewAdapter
             if (!structure.hasHeader()) {
                 return -1;
             }
-            int itemCount = countGroupRangeItem(0, groupPosition);
-            return itemCount;
+            return countGroupRangeItem(0, groupPosition);
         }
         return -1;
     }
@@ -263,8 +262,7 @@ public abstract class GroupedRecyclerViewAdapter
             if (!structure.hasFooter()) {
                 return -1;
             }
-            int itemCount = countGroupRangeItem(0, groupPosition + 1) - 1;
-            return itemCount;
+            return countGroupRangeItem(0, groupPosition + 1) - 1;
         }
         return -1;
     }
