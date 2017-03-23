@@ -6,7 +6,7 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 
  ![子项为Grid的列表](http://img.blog.csdn.net/20170323195352204?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDE3NzAyMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)   ![子项为Grid的列表(各组子项的Span不同)](http://img.blog.csdn.net/20170323195424205?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDE3NzAyMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)  ![头、尾和子项都支持多种类型的列表](http://img.blog.csdn.net/20170323195508909?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDE3NzAyMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)  
 
-![子项为Grid的列表](http://img.blog.csdn.net/20170323195549660?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDE3NzAyMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![多种子项类型的列表](http://img.blog.csdn.net/20170323195549660?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDE3NzAyMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 还可以很容易的实时列表的展开收起效果：
 
