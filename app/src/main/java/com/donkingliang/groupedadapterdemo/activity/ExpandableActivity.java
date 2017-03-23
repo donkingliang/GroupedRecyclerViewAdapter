@@ -63,7 +63,7 @@ public class ExpandableActivity extends AppCompatActivity {
 
     }
 
-    public static final void openActivity(Context context) {
+    public static void openActivity(Context context) {
         Intent intent = new Intent(context, ExpandableActivity.class);
         context.startActivity(intent);
     }

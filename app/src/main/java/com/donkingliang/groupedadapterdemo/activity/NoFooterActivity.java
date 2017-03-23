@@ -58,7 +58,7 @@ public class NoFooterActivity extends AppCompatActivity {
         rvList.setAdapter(adapter);
     }
 
-    public static final void openActivity(Context context) {
+    public static void openActivity(Context context) {
         Intent intent = new Intent(context, NoFooterActivity.class);
         context.startActivity(intent);
     }

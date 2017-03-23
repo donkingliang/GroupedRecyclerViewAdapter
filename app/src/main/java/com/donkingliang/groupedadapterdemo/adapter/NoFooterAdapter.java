@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * 这是不带组尾的Adapter。
  * 只需要{@link GroupedRecyclerViewAdapter#hasFooter(int)}方法返回false就可以去掉组尾了。
  */
-public class NoFooterAdapter extends GroupListAdapter {
+public class NoFooterAdapter extends GroupedListAdapter {
 
     public NoFooterAdapter(Context context, ArrayList<GroupEntity> groups) {
         super(context, groups);

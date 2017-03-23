@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_group_list:
-                GroupListActivity.openActivity(this);
+                GroupedListActivity.openActivity(this);
                 break;
 
             case R.id.btn_no_header:

@@ -13,11 +13,11 @@ import java.util.ArrayList;
 /**
  * 这是普通的分组Adapter 每一个组都有头部、尾部和子项。
  */
-public class GroupListAdapter extends GroupedRecyclerViewAdapter {
+public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
 
     private ArrayList<GroupEntity> mGroups;
 
-    public GroupListAdapter(Context context, ArrayList<GroupEntity> groups) {
+    public GroupedListAdapter(Context context, ArrayList<GroupEntity> groups) {
         super(context);
         mGroups = groups;
     }

@@ -55,7 +55,7 @@ public class NoHeaderActivity extends AppCompatActivity {
         rvList.setAdapter(adapter);
     }
 
-    public static final void openActivity(Context context) {
+    public static void openActivity(Context context) {
         Intent intent = new Intent(context, NoHeaderActivity.class);
         context.startActivity(intent);
     }

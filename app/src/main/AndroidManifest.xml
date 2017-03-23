@@ -11,11 +11,10 @@
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.GroupListActivity" />
+        <activity android:name=".activity.GroupedListActivity" />
         <activity android:name=".activity.NoHeaderActivity" />
         <activity android:name=".activity.NoFooterActivity" />
         <activity android:name=".activity.Grid1Activity" />

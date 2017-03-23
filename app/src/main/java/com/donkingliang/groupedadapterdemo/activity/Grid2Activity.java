@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.donkingliang.groupedadapterdemo.R;
-import com.donkingliang.groupedadapterdemo.adapter.GroupListAdapter;
+import com.donkingliang.groupedadapterdemo.adapter.GroupedListAdapter;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.donkingliang.groupedadapter.layoutmanger.GroupedGridLayoutManager;
@@ -36,7 +36,7 @@ public class Grid2Activity extends AppCompatActivity {
 
         tvTitle.setText(R.string.grid_children_2);
 
-        GroupListAdapter adapter = new GroupListAdapter(this, GroupModel.getGroups(10, 10));
+        GroupedListAdapter adapter = new GroupedListAdapter(this, GroupModel.getGroups(10, 10));
         adapter.setOnHeaderClickListener(new GroupedRecyclerViewAdapter.OnHeaderClickListener() {
             @Override
             public void onHeaderClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
@@ -81,7 +81,7 @@ public class Grid2Activity extends AppCompatActivity {
 
     }
 
-    public static final void openActivity(Context context) {
+    public static void openActivity(Context context) {
         Intent intent = new Intent(context, Grid2Activity.class);
         context.startActivity(intent);
     }

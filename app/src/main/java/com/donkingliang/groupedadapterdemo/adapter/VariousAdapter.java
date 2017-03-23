@@ -11,7 +11,7 @@ import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import java.util.ArrayList;
 
 /**
- * 头、尾和子项都支持多种类型的Adapter。他跟普通的{@link GroupListAdapter}基本是一样的。
+ * 头、尾和子项都支持多种类型的Adapter。他跟普通的{@link GroupedListAdapter}基本是一样的。
  * 只需要重写{@link GroupedRecyclerViewAdapter}里的三个方法就可以实现头、尾和子项的多种类型。
  * 使用的方式跟普通的RecyclerView实现多种type是一样的。
  * {@link GroupedRecyclerViewAdapter#getHeaderViewType(int)} 返回Header的viewType
@@ -20,12 +20,12 @@ import java.util.ArrayList;
  */
 public class VariousAdapter extends GroupedRecyclerViewAdapter {
 
-    public static final int TYPE_HEADER_1 = 1;
-    public static final int TYPE_HEADER_2 = 2;
-    public static final int TYPE_FOOTER_1 = 3;
-    public static final int TYPE_FOOTER_2 = 4;
-    public static final int TYPE_CHILD_1 = 5;
-    public static final int TYPE_CHILD_2 = 6;
+    private static final int TYPE_HEADER_1 = 1;
+    private static final int TYPE_HEADER_2 = 2;
+    private static final int TYPE_FOOTER_1 = 3;
+    private static final int TYPE_FOOTER_2 = 4;
+    private static final int TYPE_CHILD_1 = 5;
+    private static final int TYPE_CHILD_2 = 6;
 
     private ArrayList<GroupEntity> mGroups;
 

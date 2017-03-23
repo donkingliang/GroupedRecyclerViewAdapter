@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.donkingliang.groupedadapterdemo.R;
-import com.donkingliang.groupedadapterdemo.adapter.GroupListAdapter;
+import com.donkingliang.groupedadapterdemo.adapter.GroupedListAdapter;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.donkingliang.groupedadapterdemo.model.GroupModel;
@@ -18,7 +18,7 @@ import com.donkingliang.groupedadapterdemo.model.GroupModel;
 /**
  * 分组的列表
  */
-public class GroupListActivity extends AppCompatActivity {
+public class GroupedListActivity extends AppCompatActivity {
 
     private TextView tvTitle;
     private RecyclerView rvList;
@@ -34,12 +34,12 @@ public class GroupListActivity extends AppCompatActivity {
         tvTitle.setText(R.string.group_list);
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
-        GroupListAdapter adapter = new GroupListAdapter(this, GroupModel.getGroups(10, 5));
+        GroupedListAdapter adapter = new GroupedListAdapter(this, GroupModel.getGroups(10, 5));
         adapter.setOnHeaderClickListener(new GroupedRecyclerViewAdapter.OnHeaderClickListener() {
             @Override
             public void onHeaderClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
                                       int groupPosition) {
-                Toast.makeText(GroupListActivity.this, "组头：groupPosition = " + groupPosition,
+                Toast.makeText(GroupedListActivity.this, "组头：groupPosition = " + groupPosition,
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -47,7 +47,7 @@ public class GroupListActivity extends AppCompatActivity {
             @Override
             public void onFooterClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
                                       int groupPosition) {
-                Toast.makeText(GroupListActivity.this, "组尾：groupPosition = " + groupPosition,
+                Toast.makeText(GroupedListActivity.this, "组尾：groupPosition = " + groupPosition,
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -55,7 +55,7 @@ public class GroupListActivity extends AppCompatActivity {
             @Override
             public void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
                                      int groupPosition, int childPosition) {
-                Toast.makeText(GroupListActivity.this, "子项：groupPosition = " + groupPosition
+                Toast.makeText(GroupedListActivity.this, "子项：groupPosition = " + groupPosition
                                 + ", childPosition = " + childPosition,
                         Toast.LENGTH_LONG).show();
             }
@@ -64,8 +64,8 @@ public class GroupListActivity extends AppCompatActivity {
 
     }
 
-    public static final void openActivity(Context context) {
-        Intent intent = new Intent(context, GroupListActivity.class);
+    public static void openActivity(Context context) {
+        Intent intent = new Intent(context, GroupedListActivity.class);
         context.startActivity(intent);
     }
 }

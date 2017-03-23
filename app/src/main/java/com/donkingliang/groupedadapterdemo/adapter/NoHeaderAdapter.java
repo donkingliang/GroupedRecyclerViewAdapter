@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * 这是不带组头的Adapter。
  *只需要{@link GroupedRecyclerViewAdapter#hasHeader(int)}方法返回false就可以去掉组尾了。
  */
-public class NoHeaderAdapter extends GroupListAdapter {
+public class NoHeaderAdapter extends GroupedListAdapter {
 
     public NoHeaderAdapter(Context context, ArrayList<GroupEntity> groups) {
         super(context, groups);

@@ -65,7 +65,7 @@ public class VariousActivity extends AppCompatActivity {
 
     }
 
-    public static final void openActivity(Context context) {
+    public static void openActivity(Context context) {
         Intent intent = new Intent(context, VariousActivity.class);
         context.startActivity(intent);
     }

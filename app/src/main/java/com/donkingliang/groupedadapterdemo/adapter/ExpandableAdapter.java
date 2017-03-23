@@ -13,7 +13,7 @@ import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import java.util.ArrayList;
 
 /**
- * 可展开收起的Adapter。他跟普通的{@link GroupListAdapter}基本是一样的。
+ * 可展开收起的Adapter。他跟普通的{@link GroupedListAdapter}基本是一样的。
  * 它只是利用了{@link GroupedRecyclerViewAdapter}的
  * 删除一组里的所有子项{@link GroupedRecyclerViewAdapter#removeChildren(int)} 和
  * 插入一组里的所有子项{@link GroupedRecyclerViewAdapter#insertChildren(int)}
