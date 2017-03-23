@@ -247,7 +247,7 @@ public final void notifyItemRangeRemoved(int positionStart, int itemCount);
     // 刷新组头
     public void changeHeader(int groupPosition);
 
-    /刷新组尾
+    //刷新组尾
     public void changeFooter(int groupPosition);
 
     // 刷新一组里的某个子项
