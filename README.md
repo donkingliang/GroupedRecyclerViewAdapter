@@ -210,7 +210,7 @@ RecyclerView.Adapter中的
     public int getChildViewType(int groupPosition, int childPosition) ;
 ```
 
-**2、对应列表操作的注意**
+**2、对列表操作的注意**
 
 RecyclerView.Adapter提供了一系列对列表进行操作的方法。如：
 
