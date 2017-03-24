@@ -12,7 +12,7 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 
 ![可展开收起的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E5%8F%AF%E5%B1%95%E5%BC%80%E6%94%B6%E8%B5%B7%E7%9A%84%E5%88%97%E8%A1%A8.gif)
 
-以上展示的只是GroupedRecyclerViewAdapter能实现的一些常用效果，其实使用GroupedRecyclerViewAdapter还可以很容易的实现一些更加复杂的列表效果。在我的GroupedRecyclerViewAdapter项目给出的Demo中给出了上面几种效果的实现例子，并且有详细的注释说明，有兴趣的同学可以到我的GitHub下载源码。下面直接讲解GroupedRecyclerViewAdapter的使用。
+以上展示的只是GroupedRecyclerViewAdapter能实现的一些常用效果，其实使用GroupedRecyclerViewAdapter还可以很容易的实现一些更加复杂的列表效果。在我的GroupedRecyclerViewAdapter项目的Demo中给出了上面几种效果的实现例子，并且有详细的注释说明，有兴趣的同学可以到我的GitHub下载源码。下面直接讲解GroupedRecyclerViewAdapter的使用。
 
 **1、引入依赖** 
 
@@ -230,7 +230,7 @@ public final void notifyItemRangeInserted(int positionStart, int itemCount);
 public final void notifyItemRemoved(int position)
 public final void notifyItemRangeRemoved(int positionStart, int itemCount);
 ```
-在GroupedRecyclerViewAdapter不建议使用RecyclerView.Adapter的任何对列表的操作方法，因为这些方法都是基于列表的操作，它的position是相对于整个列表而言的，而GroupedRecyclerViewAdapter是分组的列表，它对列表的操作应该是基于组的。同时GroupedRecyclerViewAdapter使用了组结构来维护整个列表的结构，使我们可以对列表进行组的操作，在列表发生变化时GroupedRecyclerViewAdapter需要及时对组结构进行调整，如果使用了RecyclerView.Adapter中的方法对列表进行更新，GroupedRecyclerViewAdapter可能因为无法及时调整组结构而方式异常。所以在使用中应该避免使用这些方法。GroupedRecyclerViewAdapter同样提供了一系列对列表进行操作的方法，我们应该使用GroupedRecyclerViewAdapter所提供的方法。
+在GroupedRecyclerViewAdapter不建议使用RecyclerView.Adapter的任何对列表的操作方法，因为这些方法都是基于列表的操作，它的position是相对于整个列表而言的，而GroupedRecyclerViewAdapter是分组的列表，它对列表的操作应该是基于组的。同时GroupedRecyclerViewAdapter使用了组结构来维护整个列表的结构，使我们可以对列表进行组的操作，在列表发生变化时GroupedRecyclerViewAdapter需要及时对组结构进行调整，如果使用了RecyclerView.Adapter中的方法对列表进行更新，GroupedRecyclerViewAdapter可能因为无法及时调整组结构而发生异常。所以在使用中应该避免使用这些方法。GroupedRecyclerViewAdapter同样提供了一系列对列表进行操作的方法，我们应该使用GroupedRecyclerViewAdapter所提供的方法。
 
 ```
 	 //****** 刷新操作 *****//
@@ -309,7 +309,7 @@ public final void notifyItemRangeRemoved(int positionStart, int itemCount);
 
 **3、使用GridLayoutManager的注意**
 
-如果有使用GridLayoutManager，一定要使用项目中所提供的GroupedGridLayoutManager。因为分组列表如果要使用GridLayoutManager实现网格布局。要保证组的头部和尾部是要单独占用一行的。否则组的头、尾可能会跟子项混着一起，造成布局混乱。而且GroupedGridLayoutManager提供了对子项的SpanSize的修改方法，使用GroupedGridLayoutManager可以实现更多的复杂列表布局。
+如果要使用GridLayoutManager，一定要使用项目中所提供的GroupedGridLayoutManager。因为分组列表如果要使用GridLayoutManager实现网格布局，就要保证组的头部和尾部是要单独占用一行的。否则组的头、尾可能会跟子项混着一起，造成布局混乱。同时GroupedGridLayoutManager提供了对子项的SpanSize的修改方法，使用GroupedGridLayoutManager可以实现更多的复杂列表布局。
 
 ```
 	//直接使用GroupedGridLayoutManager实现子项的Grid效果
@@ -330,3 +330,17 @@ public final void notifyItemRangeRemoved(int positionStart, int itemCount);
    };
    rvList.setLayoutManager(gridLayoutManager);
 ```
+
+**4、BaseViewHolder的使用**
+项目中提供了一个通用的ViewHolder：BaseViewHolder。提供了根据viewId获取View的方法和对View、TextView、ImageView的常用设置方法。
+
+```
+//根据id获取View
+TextView  textView = holder.get(R.id.tv_header);
+
+//View、TextView、ImageView的常用设置方法。并且支持方法连缀调用
+holder.setText(R.id.tv_header, "内容")
+                .setImageResource(R.id.iv_image, 资源id)
+                .setBackgroundRes(R.id.view,资源id);
+```
+BaseViewHolder是可以通用的，在普通的Adapter中也可以使用，可以省去每次都要创建ViewHolder的麻烦。
