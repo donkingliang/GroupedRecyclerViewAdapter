@@ -48,13 +48,6 @@ task javadoc(type: Javadoc) {
     classpath += configurations.compile
 }
 
-// 制作文档(Javadoc)
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
 artifacts {
     archives sourcesJar
-    archives javadocJar
 }
