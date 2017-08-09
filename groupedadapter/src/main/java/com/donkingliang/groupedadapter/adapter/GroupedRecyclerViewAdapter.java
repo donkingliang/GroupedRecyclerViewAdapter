@@ -58,38 +58,44 @@ public abstract class GroupedRecyclerViewAdapter
         int type = judgeType(position);
         final int groupPosition = getGroupPositionForPosition(position);
         if (type == TYPE_HEADER) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnHeaderClickListener != null) {
-                        mOnHeaderClickListener.onHeaderClick(GroupedRecyclerViewAdapter.this,
-                                holder, groupPosition);
+            if (mOnHeaderClickListener != null) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnHeaderClickListener != null) {
+                            mOnHeaderClickListener.onHeaderClick(GroupedRecyclerViewAdapter.this,
+                                    holder, groupPosition);
+                        }
                     }
-                }
-            });
+                });
+            }
             onBindHeaderViewHolder(holder, groupPosition);
         } else if (type == TYPE_FOOTER) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnFooterClickListener != null) {
-                        mOnFooterClickListener.onFooterClick(GroupedRecyclerViewAdapter.this,
-                                holder, groupPosition);
+            if (mOnFooterClickListener != null) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnFooterClickListener != null) {
+                            mOnFooterClickListener.onFooterClick(GroupedRecyclerViewAdapter.this,
+                                    holder, groupPosition);
+                        }
                     }
-                }
-            });
+                });
+            }
             onBindFooterViewHolder(holder, groupPosition);
         } else if (type == TYPE_CHILD) {
             final int childPosition = getChildPositionForPosition(groupPosition, position);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnChildClickListener != null) {
-                        mOnChildClickListener.onChildClick(GroupedRecyclerViewAdapter.this,
-                                holder, groupPosition, childPosition);
+            if (mOnChildClickListener != null) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mOnChildClickListener != null) {
+                            mOnChildClickListener.onChildClick(GroupedRecyclerViewAdapter.this,
+                                    holder, groupPosition, childPosition);
+                        }
                     }
-                }
-            });
+                });
+            }
             onBindChildViewHolder(holder, groupPosition, childPosition);
         }
     }
