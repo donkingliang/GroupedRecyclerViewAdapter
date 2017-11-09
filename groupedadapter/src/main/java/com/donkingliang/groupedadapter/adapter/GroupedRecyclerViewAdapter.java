@@ -2,6 +2,7 @@ package com.donkingliang.groupedadapter.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,32 @@ public abstract class GroupedRecyclerViewAdapter
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         structureChanged();
+    }
+
+    @Override
+    public void onViewAttachedToWindow(BaseViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+
+        //处理StaggeredGridLayout，保证组头和组尾占满一行。
+        if (isStaggeredGridLayout(holder)) {
+            handleLayoutIfStaggeredGridLayout(holder, holder.getLayoutPosition());
+        }
+    }
+
+    private boolean isStaggeredGridLayout(RecyclerView.ViewHolder holder) {
+        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+        if (layoutParams != null && layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+            return true;
+        }
+        return false;
+    }
+
+    protected void handleLayoutIfStaggeredGridLayout(RecyclerView.ViewHolder holder, int position) {
+        if (judgeType(position) == TYPE_HEADER || judgeType(position) == TYPE_FOOTER) {
+            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams)
+                    holder.itemView.getLayoutParams();
+            p.setFullSpan(true);
+        }
     }
 
     public GroupedRecyclerViewAdapter(Context context) {

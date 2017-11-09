@@ -2,6 +2,7 @@ package com.donkingliang.groupedadapter.layoutmanger;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
+import android.util.AttributeSet;
 
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 
@@ -19,6 +20,20 @@ public class GroupedGridLayoutManager extends GridLayoutManager {
                                     GroupedRecyclerViewAdapter adapter) {
         super(context, spanCount);
         mAdapter = adapter;
+        setSpanSizeLookup();
+    }
+
+    public GroupedGridLayoutManager(Context context, int spanCount, int orientation,
+                                    boolean reverseLayout, GroupedRecyclerViewAdapter mAdapter) {
+        super(context, spanCount, orientation, reverseLayout);
+        this.mAdapter = mAdapter;
+        setSpanSizeLookup();
+    }
+
+    public GroupedGridLayoutManager(Context context, AttributeSet attrs, int defStyleAttr,
+                                    int defStyleRes, GroupedRecyclerViewAdapter mAdapter) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.mAdapter = mAdapter;
         setSpanSizeLookup();
     }
 
