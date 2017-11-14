@@ -37,6 +37,11 @@ public abstract class GroupedRecyclerViewAdapter
     private boolean isDataChanged;
     private int mTempPosition;
 
+    public GroupedRecyclerViewAdapter(Context context) {
+        mContext = context;
+        registerAdapterDataObserver(new GroupDataObserver());
+    }
+
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -61,17 +66,12 @@ public abstract class GroupedRecyclerViewAdapter
         return false;
     }
 
-    protected void handleLayoutIfStaggeredGridLayout(RecyclerView.ViewHolder holder, int position) {
+    private void handleLayoutIfStaggeredGridLayout(RecyclerView.ViewHolder holder, int position) {
         if (judgeType(position) == TYPE_HEADER || judgeType(position) == TYPE_FOOTER) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams)
                     holder.itemView.getLayoutParams();
             p.setFullSpan(true);
         }
-    }
-
-    public GroupedRecyclerViewAdapter(Context context) {
-        mContext = context;
-        registerAdapterDataObserver(new GroupDataObserver());
     }
 
     @Override

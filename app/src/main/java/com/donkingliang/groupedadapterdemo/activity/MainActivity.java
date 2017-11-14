@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.btn_sticky_list).setOnClickListener(this);
         findViewById(R.id.btn_group_list).setOnClickListener(this);
         findViewById(R.id.btn_no_header).setOnClickListener(this);
         findViewById(R.id.btn_no_footer).setOnClickListener(this);
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.btn_sticky_list:
+                StickyActivity.openActivity(this);
+                break;
+
             case R.id.btn_group_list:
                 GroupedListActivity.openActivity(this);
                 break;

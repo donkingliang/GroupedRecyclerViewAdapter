@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GroupedRecyclerViewAdapter</string>
 
+    <string name="sticky_list">头部吸顶的列表</string>
     <string name="group_list">分组的列表</string>
     <string name="no_header">不带组头的列表</string>
     <string name="no_footer">不带组尾的列表</string>
