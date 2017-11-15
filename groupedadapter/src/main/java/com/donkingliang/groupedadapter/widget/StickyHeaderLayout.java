@@ -67,8 +67,7 @@ public class StickyHeaderLayout extends FrameLayout {
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (getChildCount() > 0 || !(child instanceof RecyclerView)) {
             //外界只能向StickyHeaderLayout添加一个RecyclerView,而且只能添加RecyclerView。
-//            throw new IllegalArgumentException("StickyHeaderLayout can host only one direct child --> RecyclerView");
-            return;
+            throw new IllegalArgumentException("StickyHeaderLayout can host only one direct child --> RecyclerView");
         }
         super.addView(child, index, params);
         mRecyclerView = (RecyclerView) child;

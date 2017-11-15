@@ -211,9 +211,8 @@ public abstract class GroupedRecyclerViewAdapter
             }
         }
 
-//        throw new IndexOutOfBoundsException("不能确定下标" + position + "的Item类型。" +
-//                "下标" + position + "已经超出了适配器的父子类型个数的总和：" + getItemCount());
-        return 0;
+        throw new IndexOutOfBoundsException("can't determine the item type of the position." +
+                "position = " + position + ",item count = " + getItemCount());
     }
 
     /**
