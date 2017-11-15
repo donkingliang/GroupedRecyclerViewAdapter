@@ -350,7 +350,7 @@ holder.setText(R.id.tv_header, "内容")
 ```
 BaseViewHolder是可以通用的，在普通的Adapter中也可以使用，可以省去每次都要创建ViewHolder的麻烦。
 
-**5、头部悬浮吸顶**
+**5、头部悬浮吸顶功能**
 
 应一些朋友的反馈，我在1.2.0版本中新加了列表的头部悬浮吸顶功能。使用起来非常的简单，只需要用框架里提供的StickyHeaderLayout包裹一下你的RecyclerView就可以了。当然，你需要使用GroupedRecyclerViewAdapter才能看到效果。
 
