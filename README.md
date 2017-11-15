@@ -368,6 +368,5 @@ StickyHeaderLayout提供了一个设置是否显示悬浮吸顶的方法。
 	//是否吸顶，默认为true。
 	stickyLayout.setSticky(true);
 ```
-BaseViewHolder是可以通用的，在普通的Adapter中也可以使用，可以省去每次都要创建ViewHolder的麻烦。
 
 
