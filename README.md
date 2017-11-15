@@ -12,6 +12,10 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 
 ![可展开收起的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E5%8F%AF%E5%B1%95%E5%BC%80%E6%94%B6%E8%B5%B7%E7%9A%84%E5%88%97%E8%A1%A8.gif)
 
+还可以轻松实现头部悬浮吸顶的效果：
+
+![头部吸顶的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E5%A4%B4%E9%83%A8%E5%90%B8%E9%A1%B6%E7%9A%84%E5%88%97%E8%A1%A8.gif)
+
 以上展示的只是GroupedRecyclerViewAdapter能实现的一些常用效果，其实使用GroupedRecyclerViewAdapter还可以很容易的实现一些更加复杂的列表效果。在我的GroupedRecyclerViewAdapter项目的Demo中给出了上面几种效果的实现例子，并且有详细的注释说明，有兴趣的同学可以到我的GitHub下载源码。下面直接讲解GroupedRecyclerViewAdapter的使用。
 
 **1、引入依赖** 
