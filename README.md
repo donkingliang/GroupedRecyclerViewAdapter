@@ -1,6 +1,6 @@
 # GroupedRecyclerViewAdapter
 
-GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，并且每个组都可以包含组头、组尾和子项；可以方便实现多种Type类型的列表，可以实现如QQ联系人的列表一样的列表展开收起功能等。下面先让我们看一下它所能够实现的一些效果：
+GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，并且每个组都可以包含组头、组尾和子项；可以方便实现多种Type类型的列表，可以实现如QQ联系人的列表一样的列表展开收起功能，还可以实现头部悬浮吸顶功能等。下面先让我们看一下它所能够实现的一些效果：
 
 ![分组的列表](http://img.blog.csdn.net/20170323195156026?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDE3NzAyMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)   ![不带组尾的列表](http://img.blog.csdn.net/20170323195228745?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDE3NzAyMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)  ![不带组头的列表](http://img.blog.csdn.net/20170323195318281?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDE3NzAyMg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast) 
 
@@ -29,7 +29,7 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 在Module的build.gradle在添加以下代码
 
 ```
-	compile 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.1.0'
+	compile 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.2.0'
 ```
 
 **2、继承GroupedRecyclerViewAdapter**
@@ -332,6 +332,7 @@ public final void notifyItemRangeRemoved(int positionStart, int itemCount);
 ```
 
 **4、BaseViewHolder的使用**
+
 项目中提供了一个通用的ViewHolder：BaseViewHolder。提供了根据viewId获取View的方法和对View、TextView、ImageView的常用设置方法。
 
 ```java
@@ -344,3 +345,28 @@ holder.setText(R.id.tv_header, "内容")
                 .setBackgroundRes(R.id.view,资源id);
 ```
 BaseViewHolder是可以通用的，在普通的Adapter中也可以使用，可以省去每次都要创建ViewHolder的麻烦。
+
+**5、头部悬浮吸顶**
+
+应一些朋友的反馈，我在1.2.0版本中新加了列表的头部悬浮吸顶功能。使用起来非常的简单，只需要用框架里提供的StickyHeaderLayout包裹一下你的RecyclerView就可以了。当然，你需要使用GroupedRecyclerViewAdapter才能看到效果。
+
+```xml
+    <!-- 用StickyHeaderLayout包裹RecyclerView -->
+    <com.donkingliang.groupedadapter.widget.StickyHeaderLayout
+        android:id="@+id/sticky_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.donkingliang.groupedadapter.widget.StickyHeaderLayout>
+```
+StickyHeaderLayout提供了一个设置是否显示悬浮吸顶的方法。
+```java
+	//是否吸顶，默认为true。
+	stickyLayout.setSticky(true);
+```
+
+
