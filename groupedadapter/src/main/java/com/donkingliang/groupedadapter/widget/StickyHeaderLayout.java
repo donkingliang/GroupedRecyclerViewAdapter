@@ -123,14 +123,20 @@ public class StickyHeaderLayout extends FrameLayout {
                 //通过groupPosition获取当前组的组头position。这个组头就是我们需要吸顶的布局。
                 int groupHeaderPosition = gAdapter.getPositionForGroupHeader(groupPosition);
                 if (groupHeaderPosition != -1) {
-                    //添加新的吸顶布局前，要先回收旧的吸顶布局。
-                    recycle();
-
                     //获取吸顶布局的viewType。
                     int viewType = gAdapter.getItemViewType(groupHeaderPosition);
 
-                    //从缓存池中获取吸顶布局。
-                    BaseViewHolder holder = getStickyViewByType(viewType);
+                    //如果当前的吸顶布局的类型和我们需要的一样，就直接获取它的ViewHolder，否则就回收。
+                    BaseViewHolder holder = recycleStickyView(viewType);
+
+                    //标志holder是否是从当前吸顶布局取出来的。
+                    boolean flag = holder != null;
+
+                    if (holder == null) {
+                        //从缓存池中获取吸顶布局。
+                        holder = getStickyViewByType(viewType);
+                    }
+
                     if (holder == null) {
                         //如果没有从缓存池中获取到吸顶布局，则通过GroupedRecyclerViewAdapter创建。
                         holder = gAdapter.onCreateViewHolder(mStickyLayout, viewType);
@@ -142,8 +148,10 @@ public class StickyHeaderLayout extends FrameLayout {
                     //这样可以保证吸顶布局的显示效果跟列表中的组头保持一致。
                     gAdapter.onBindViewHolder(holder, groupHeaderPosition);
 
-                    //把吸顶布局添加到容器里。
-                    mStickyLayout.addView(holder.itemView);
+                    //如果holder不是从当前吸顶布局取出来的，就需要把吸顶布局添加到容器里。
+                    if (!flag) {
+                        mStickyLayout.addView(holder.itemView);
+                    }
                 } else {
                     //如果当前组没有组头，则不显示吸顶布局。
                     //回收旧的吸顶布局。
@@ -159,6 +167,27 @@ public class StickyHeaderLayout extends FrameLayout {
             //设置mStickyLayout的Y偏移量。
             mStickyLayout.setTranslationY(calculateOffset(gAdapter, firstVisibleItem, groupPosition + 1));
         }
+    }
+
+    /**
+     * 判断是否需要先回收吸顶布局，如果要回收，则回收吸顶布局并返回null。
+     * 如果不回收，则返回吸顶布局的ViewHolder。
+     * 这样做可以避免频繁的添加和移除吸顶布局。
+     *
+     * @param viewType
+     * @return
+     */
+    private BaseViewHolder recycleStickyView(int viewType) {
+        if (mStickyLayout.getChildCount() > 0) {
+            View view = mStickyLayout.getChildAt(0);
+            int type = (int) view.getTag(VIEW_TAG_TYPE);
+            if (type == viewType) {
+                return (BaseViewHolder) view.getTag(VIEW_TAG_HOLDER);
+            } else {
+                recycle();
+            }
+        }
+        return null;
     }
 
     /**
@@ -211,7 +240,6 @@ public class StickyHeaderLayout extends FrameLayout {
     /**
      * 获取当前第一个显示的item .
      */
-
     private int getFirstVisibleItem() {
         int firstVisibleItem = -1;
         RecyclerView.LayoutManager layout = mRecyclerView.getLayoutManager();
@@ -267,4 +295,3 @@ public class StickyHeaderLayout extends FrameLayout {
         }
     }
 }
-
