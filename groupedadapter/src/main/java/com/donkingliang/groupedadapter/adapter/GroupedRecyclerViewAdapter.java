@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * 因为当分组列表发生变化时，需要及时更新分组列表的组结构{@link GroupedRecyclerViewAdapter#mStructures}
  */
 public abstract class GroupedRecyclerViewAdapter
-        extends RecyclerView.Adapter<BaseViewHolder> {
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int TYPE_HEADER = R.integer.type_header;
     public static final int TYPE_FOOTER = R.integer.type_footer;
@@ -49,7 +49,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     @Override
-    public void onViewAttachedToWindow(BaseViewHolder holder) {
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
 
         //处理StaggeredGridLayout，保证组头和组尾占满一行。
@@ -75,13 +75,13 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(getLayoutId(mTempPosition, viewType), parent, false);
         return new BaseViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final BaseViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         int type = judgeType(position);
         final int groupPosition = getGroupPositionForPosition(position);
         if (type == TYPE_HEADER) {
@@ -91,12 +91,12 @@ public abstract class GroupedRecyclerViewAdapter
                     public void onClick(View v) {
                         if (mOnHeaderClickListener != null) {
                             mOnHeaderClickListener.onHeaderClick(GroupedRecyclerViewAdapter.this,
-                                    holder, groupPosition);
+                                    (BaseViewHolder) holder, groupPosition);
                         }
                     }
                 });
             }
-            onBindHeaderViewHolder(holder, groupPosition);
+            onBindHeaderViewHolder((BaseViewHolder) holder, groupPosition);
         } else if (type == TYPE_FOOTER) {
             if (mOnFooterClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -104,12 +104,12 @@ public abstract class GroupedRecyclerViewAdapter
                     public void onClick(View v) {
                         if (mOnFooterClickListener != null) {
                             mOnFooterClickListener.onFooterClick(GroupedRecyclerViewAdapter.this,
-                                    holder, groupPosition);
+                                    (BaseViewHolder) holder, groupPosition);
                         }
                     }
                 });
             }
-            onBindFooterViewHolder(holder, groupPosition);
+            onBindFooterViewHolder((BaseViewHolder) holder, groupPosition);
         } else if (type == TYPE_CHILD) {
             final int childPosition = getChildPositionForPosition(groupPosition, position);
             if (mOnChildClickListener != null) {
@@ -118,12 +118,12 @@ public abstract class GroupedRecyclerViewAdapter
                     public void onClick(View v) {
                         if (mOnChildClickListener != null) {
                             mOnChildClickListener.onChildClick(GroupedRecyclerViewAdapter.this,
-                                    holder, groupPosition, childPosition);
+                                    (BaseViewHolder) holder, groupPosition, childPosition);
                         }
                     }
                 });
             }
-            onBindChildViewHolder(holder, groupPosition, childPosition);
+            onBindChildViewHolder((BaseViewHolder) holder, groupPosition, childPosition);
         }
     }
 

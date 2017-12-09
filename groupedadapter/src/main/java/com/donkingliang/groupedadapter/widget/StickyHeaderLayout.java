@@ -138,7 +138,7 @@ public class StickyHeaderLayout extends FrameLayout {
 
                     if (holder == null) {
                         //如果没有从缓存池中获取到吸顶布局，则通过GroupedRecyclerViewAdapter创建。
-                        holder = gAdapter.onCreateViewHolder(mStickyLayout, viewType);
+                        holder = (BaseViewHolder) gAdapter.onCreateViewHolder(mStickyLayout, viewType);
                         holder.itemView.setTag(VIEW_TAG_TYPE, viewType);
                         holder.itemView.setTag(VIEW_TAG_HOLDER, holder);
                     }
