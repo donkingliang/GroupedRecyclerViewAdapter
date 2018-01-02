@@ -48,6 +48,9 @@ public class StickyHeaderLayout extends FrameLayout {
     //是否吸顶。
     private boolean isSticky = true;
 
+    //是否已经注册了adapter刷新监听
+    private boolean isRegisterDataObserver = false;
+
     public StickyHeaderLayout(@NonNull Context context) {
         super(context);
         mContext = context;
@@ -84,7 +87,7 @@ public class StickyHeaderLayout extends FrameLayout {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 // 在滚动的时候，需要不断的更新吸顶布局。
                 if (isSticky) {
-                    updateStickyView();
+                    updateStickyView(false);
                 }
             }
         });
@@ -103,20 +106,21 @@ public class StickyHeaderLayout extends FrameLayout {
 
     /**
      * 更新吸顶布局。
+     * @param imperative 是否强制更新。
      */
-    private void updateStickyView() {
+    private void updateStickyView(boolean imperative) {
         RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
         //只有RecyclerView的adapter是GroupedRecyclerViewAdapter的时候，才会添加吸顶布局。
         if (adapter instanceof GroupedRecyclerViewAdapter) {
             GroupedRecyclerViewAdapter gAdapter = (GroupedRecyclerViewAdapter) adapter;
-
+            registerAdapterDataObserver(gAdapter);
             //获取列表显示的第一个项。
             int firstVisibleItem = getFirstVisibleItem();
             //通过显示的第一个项的position获取它所在的组。
             int groupPosition = gAdapter.getGroupPositionForPosition(firstVisibleItem);
 
             //如果当前吸顶的组头不是我们要吸顶的组头，就更新吸顶布局。这样做可以避免频繁的更新吸顶布局。
-            if (mCurrentStickyGroup != groupPosition) {
+            if (imperative || mCurrentStickyGroup != groupPosition) {
                 mCurrentStickyGroup = groupPosition;
 
                 //通过groupPosition获取当前组的组头position。这个组头就是我们需要吸顶的布局。
@@ -166,6 +170,46 @@ public class StickyHeaderLayout extends FrameLayout {
             //设置mStickyLayout的Y偏移量。
             mStickyLayout.setTranslationY(calculateOffset(gAdapter, firstVisibleItem, groupPosition + 1));
         }
+    }
+
+    /**
+     * 注册adapter刷新监听
+     */
+    private void registerAdapterDataObserver(GroupedRecyclerViewAdapter adapter) {
+        if (!isRegisterDataObserver) {
+            isRegisterDataObserver = true;
+            adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onChanged() {
+                    updateStickyViewDelayed();
+                }
+
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount) {
+                    updateStickyViewDelayed();
+                }
+
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    updateStickyViewDelayed();
+                }
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount) {
+                    updateStickyViewDelayed();
+                }
+
+            });
+        }
+    }
+
+    private void updateStickyViewDelayed(){
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updateStickyView(true);
+            }
+        },100);
     }
 
     /**
@@ -285,7 +329,7 @@ public class StickyHeaderLayout extends FrameLayout {
             if (mStickyLayout != null) {
                 if (isSticky) {
                     mStickyLayout.setVisibility(VISIBLE);
-                    updateStickyView();
+                    updateStickyView(false);
                 } else {
                     recycle();
                     mStickyLayout.setVisibility(GONE);
