@@ -33,7 +33,7 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 在Module的build.gradle在添加以下代码
 
 ```
-	compile 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.2.1'
+	compile 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.2.2'
 ```
 
 **2、继承GroupedRecyclerViewAdapter**
