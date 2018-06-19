@@ -355,11 +355,29 @@ public abstract class GroupedRecyclerViewAdapter
     //****** 刷新操作 *****//
 
     /**
+     * Use {@link #notifyDataChanged()} instead.
+     */
+    @Deprecated
+    public void changeDataSet() {
+        notifyDataChanged();
+    }
+
+    /**
      * 刷新数据列表
      */
-    public void changeDataSet() {
+    public void notifyDataChanged() {
         isDataChanged = true;
         notifyDataSetChanged();
+    }
+
+    /**
+     * Use {@link #notifyGroupChanged(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void changeGroup(int groupPosition) {
+        notifyGroupChanged(groupPosition);
     }
 
     /**
@@ -367,7 +385,7 @@ public abstract class GroupedRecyclerViewAdapter
      *
      * @param groupPosition
      */
-    public void changeGroup(int groupPosition) {
+    public void notifyGroupChanged(int groupPosition) {
         int index = getPositionForGroupHeader(groupPosition);
         int itemCount = countGroupItem(groupPosition);
         if (index >= 0 && itemCount > 0) {
@@ -376,11 +394,22 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyGroupRangeChanged(int, int)} instead.
+     *
+     * @param groupPosition
+     * @param count
+     */
+    @Deprecated
+    public void changeRangeGroup(int groupPosition, int count) {
+        notifyGroupRangeChanged(groupPosition, count);
+    }
+
+    /**
      * 刷新多组数据，包括组头,组尾和子项
      *
      * @param groupPosition
      */
-    public void changeRangeGroup(int groupPosition, int count) {
+    public void notifyGroupRangeChanged(int groupPosition, int count) {
         int index = getPositionForGroupHeader(groupPosition);
         int itemCount = 0;
         if (groupPosition + count <= mStructures.size()) {
@@ -394,11 +423,21 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyHeaderChanged(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void changeHeader(int groupPosition) {
+        notifyHeaderChanged(groupPosition);
+    }
+
+    /**
      * 刷新组头
      *
      * @param groupPosition
      */
-    public void changeHeader(int groupPosition) {
+    public void notifyHeaderChanged(int groupPosition) {
         int index = getPositionForGroupHeader(groupPosition);
         if (index >= 0) {
             notifyItemChanged(index);
@@ -406,15 +445,36 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyFooterChanged(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void changeFooter(int groupPosition) {
+        notifyFooterChanged(groupPosition);
+    }
+
+    /**
      * 刷新组尾
      *
      * @param groupPosition
      */
-    public void changeFooter(int groupPosition) {
+    public void notifyFooterChanged(int groupPosition) {
         int index = getPositionForGroupFooter(groupPosition);
         if (index >= 0) {
             notifyItemChanged(index);
         }
+    }
+
+    /**
+     * Use {@link #notifyChildChanged(int, int)} instead.
+     *
+     * @param groupPosition
+     * @param childPosition
+     */
+    @Deprecated
+    public void changeChild(int groupPosition, int childPosition) {
+        notifyChildChanged(groupPosition, childPosition);
     }
 
     /**
@@ -423,11 +483,23 @@ public abstract class GroupedRecyclerViewAdapter
      * @param groupPosition
      * @param childPosition
      */
-    public void changeChild(int groupPosition, int childPosition) {
+    public void notifyChildChanged(int groupPosition, int childPosition) {
         int index = getPositionForChild(groupPosition, childPosition);
         if (index >= 0) {
             notifyItemChanged(index);
         }
+    }
+
+    /**
+     * Use {@link #notifyChildRangeChanged(int, int, int)} instead.
+     *
+     * @param groupPosition
+     * @param childPosition
+     * @param count
+     */
+    @Deprecated
+    public void changeRangeChild(int groupPosition, int childPosition, int count) {
+        notifyChildRangeChanged(groupPosition, childPosition, count);
     }
 
     /**
@@ -437,7 +509,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @param childPosition
      * @param count
      */
-    public void changeRangeChild(int groupPosition, int childPosition, int count) {
+    public void notifyChildRangeChanged(int groupPosition, int childPosition, int count) {
         if (groupPosition < mStructures.size()) {
             int index = getPositionForChild(groupPosition, childPosition);
             if (index >= 0) {
@@ -452,11 +524,21 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyChildrenChanged(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void changeChildren(int groupPosition) {
+        notifyChildrenChanged(groupPosition);
+    }
+
+    /**
      * 刷新一组里的所有子项
      *
      * @param groupPosition
      */
-    public void changeChildren(int groupPosition) {
+    public void notifyChildrenChanged(int groupPosition) {
         if (groupPosition < mStructures.size()) {
             int index = getPositionForChild(groupPosition, 0);
             if (index >= 0) {
@@ -469,11 +551,27 @@ public abstract class GroupedRecyclerViewAdapter
     //****** 删除操作 *****//
 
     /**
+     * Use {@link #notifyDataRemoved()} instead.
+     */
+    @Deprecated
+    public void removeAll() {
+        notifyDataRemoved();
+    }
+
+    /**
      * 删除所有数据
      */
-    public void removeAll() {
+    public void notifyDataRemoved() {
         notifyItemRangeRemoved(0, getItemCount());
         mStructures.clear();
+    }
+
+    /**
+     * Use {@link #notifyGroupRemoved(int)} instead.
+     */
+    @Deprecated
+    public void removeGroup(int groupPosition) {
+        notifyGroupRemoved(groupPosition);
     }
 
     /**
@@ -481,7 +579,7 @@ public abstract class GroupedRecyclerViewAdapter
      *
      * @param groupPosition
      */
-    public void removeGroup(int groupPosition) {
+    public void notifyGroupRemoved(int groupPosition) {
         int index = getPositionForGroupHeader(groupPosition);
         int itemCount = countGroupItem(groupPosition);
         if (index >= 0 && itemCount > 0) {
@@ -492,11 +590,19 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyGroupRangeRemoved(int, int)} instead.
+     */
+    @Deprecated
+    public void removeRangeGroup(int groupPosition, int count) {
+        notifyGroupRangeRemoved(groupPosition, count);
+    }
+
+    /**
      * 删除多组数据，包括组头,组尾和子项
      *
      * @param groupPosition
      */
-    public void removeRangeGroup(int groupPosition, int count) {
+    public void notifyGroupRangeRemoved(int groupPosition, int count) {
         int index = getPositionForGroupHeader(groupPosition);
         int itemCount = 0;
         if (groupPosition + count <= mStructures.size()) {
@@ -512,11 +618,19 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyHeaderRemoved(int)} instead.
+     */
+    @Deprecated
+    public void removeHeader(int groupPosition) {
+        notifyHeaderRemoved(groupPosition);
+    }
+
+    /**
      * 删除组头
      *
      * @param groupPosition
      */
-    public void removeHeader(int groupPosition) {
+    public void notifyHeaderRemoved(int groupPosition) {
         int index = getPositionForGroupHeader(groupPosition);
         if (index >= 0) {
             GroupStructure structure = mStructures.get(groupPosition);
@@ -527,11 +641,21 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyFooterRemoved(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void removeFooter(int groupPosition) {
+        notifyFooterRemoved(groupPosition);
+    }
+
+    /**
      * 删除组尾
      *
      * @param groupPosition
      */
-    public void removeFooter(int groupPosition) {
+    public void notifyFooterRemoved(int groupPosition) {
         int index = getPositionForGroupFooter(groupPosition);
         if (index >= 0) {
             GroupStructure structure = mStructures.get(groupPosition);
@@ -542,12 +666,23 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyChildRemoved(int, int)} instead.
+     *
+     * @param groupPosition
+     * @param childPosition
+     */
+    @Deprecated
+    public void removeChild(int groupPosition, int childPosition) {
+        notifyChildRemoved(groupPosition, childPosition);
+    }
+
+    /**
      * 删除一组里的某个子项
      *
      * @param groupPosition
      * @param childPosition
      */
-    public void removeChild(int groupPosition, int childPosition) {
+    public void notifyChildRemoved(int groupPosition, int childPosition) {
         int index = getPositionForChild(groupPosition, childPosition);
         if (index >= 0) {
             GroupStructure structure = mStructures.get(groupPosition);
@@ -558,13 +693,25 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyChildRangeRemoved(int, int, int)} instead.
+     *
+     * @param groupPosition
+     * @param childPosition
+     * @param count
+     */
+    @Deprecated
+    public void removeRangeChild(int groupPosition, int childPosition, int count) {
+        notifyChildRangeRemoved(groupPosition, childPosition, count);
+    }
+
+    /**
      * 删除一组里的多个子项
      *
      * @param groupPosition
      * @param childPosition
      * @param count
      */
-    public void removeRangeChild(int groupPosition, int childPosition, int count) {
+    public void notifyChildRangeRemoved(int groupPosition, int childPosition, int count) {
         if (groupPosition < mStructures.size()) {
             int index = getPositionForChild(groupPosition, childPosition);
             if (index >= 0) {
@@ -582,11 +729,21 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyChildrenRemoved(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void removeChildren(int groupPosition) {
+        notifyChildrenRemoved(groupPosition);
+    }
+
+    /**
      * 删除一组里的所有子项
      *
      * @param groupPosition
      */
-    public void removeChildren(int groupPosition) {
+    public void notifyChildrenRemoved(int groupPosition) {
         if (groupPosition < mStructures.size()) {
             int index = getPositionForChild(groupPosition, 0);
             if (index >= 0) {
@@ -602,11 +759,21 @@ public abstract class GroupedRecyclerViewAdapter
     //****** 插入操作 *****//
 
     /**
+     * Use {@link #notifyGroupInserted(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void insertGroup(int groupPosition) {
+        notifyGroupInserted(groupPosition);
+    }
+
+    /**
      * 插入一组数据
      *
      * @param groupPosition
      */
-    public void insertGroup(int groupPosition) {
+    public void notifyGroupInserted(int groupPosition) {
         GroupStructure structure = new GroupStructure(hasHeader(groupPosition),
                 hasFooter(groupPosition), getChildrenCount(groupPosition));
         if (groupPosition < mStructures.size()) {
@@ -625,12 +792,23 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyGroupRangeInserted(int, int)} instead.
+     *
+     * @param groupPosition
+     * @param count
+     */
+    @Deprecated
+    public void insertRangeGroup(int groupPosition, int count) {
+        notifyGroupRangeInserted(groupPosition, count);
+    }
+
+    /**
      * 插入一组数据
      *
      * @param groupPosition
+     * @param count
      */
-    public void insertRangeGroup(int groupPosition, int count) {
-
+    public void notifyGroupRangeInserted(int groupPosition, int count) {
         ArrayList<GroupStructure> list = new ArrayList<>();
         for (int i = groupPosition; i < count; i++) {
             GroupStructure structure = new GroupStructure(hasHeader(i),
@@ -654,11 +832,21 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyHeaderInserted(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void insertHeader(int groupPosition) {
+        notifyHeaderInserted(groupPosition);
+    }
+
+    /**
      * 插入组头
      *
      * @param groupPosition
      */
-    public void insertHeader(int groupPosition) {
+    public void notifyHeaderInserted(int groupPosition) {
         if (groupPosition < mStructures.size() && 0 > getPositionForGroupHeader(groupPosition)) {
             GroupStructure structure = mStructures.get(groupPosition);
             structure.setHasHeader(true);
@@ -669,11 +857,21 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyFooterInserted(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void insertFooter(int groupPosition) {
+        notifyFooterInserted(groupPosition);
+    }
+
+    /**
      * 插入组尾
      *
      * @param groupPosition
      */
-    public void insertFooter(int groupPosition) {
+    public void notifyFooterInserted(int groupPosition) {
         if (groupPosition < mStructures.size() && 0 > getPositionForGroupFooter(groupPosition)) {
             GroupStructure structure = mStructures.get(groupPosition);
             structure.setHasFooter(true);
@@ -684,12 +882,23 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyChildInserted(int, int)} instead.
+     *
+     * @param groupPosition
+     * @param childPosition
+     */
+    @Deprecated
+    public void insertChild(int groupPosition, int childPosition) {
+        notifyChildInserted(groupPosition, childPosition);
+    }
+
+    /**
      * 插入一个子项到组里
      *
      * @param groupPosition
      * @param childPosition
      */
-    public void insertChild(int groupPosition, int childPosition) {
+    public void notifyChildInserted(int groupPosition, int childPosition) {
         if (groupPosition < mStructures.size()) {
             GroupStructure structure = mStructures.get(groupPosition);
             int index = getPositionForChild(groupPosition, childPosition);
@@ -705,13 +914,25 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyChildRangeInserted(int, int, int)} instead.
+     *
+     * @param groupPosition
+     * @param childPosition
+     * @param count
+     */
+    @Deprecated
+    public void insertRangeChild(int groupPosition, int childPosition, int count) {
+        notifyChildRangeInserted(groupPosition, childPosition, count);
+    }
+
+    /**
      * 插入一组里的多个子项
      *
      * @param groupPosition
      * @param childPosition
      * @param count
      */
-    public void insertRangeChild(int groupPosition, int childPosition, int count) {
+    public void notifyChildRangeInserted(int groupPosition, int childPosition, int count) {
         if (groupPosition < mStructures.size()) {
             int index = countGroupRangeItem(0, groupPosition);
             GroupStructure structure = mStructures.get(groupPosition);
@@ -732,11 +953,21 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * Use {@link #notifyChildrenInserted(int)} instead.
+     *
+     * @param groupPosition
+     */
+    @Deprecated
+    public void insertChildren(int groupPosition) {
+        notifyChildrenInserted(groupPosition);
+    }
+
+    /**
      * 插入一组里的所有子项
      *
      * @param groupPosition
      */
-    public void insertChildren(int groupPosition) {
+    public void notifyChildrenInserted(int groupPosition) {
         if (groupPosition < mStructures.size()) {
             int index = countGroupRangeItem(0, groupPosition);
             GroupStructure structure = mStructures.get(groupPosition);

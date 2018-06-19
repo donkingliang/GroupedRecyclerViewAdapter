@@ -15,8 +15,8 @@ import java.util.ArrayList;
 /**
  * 可展开收起的Adapter。他跟普通的{@link GroupedListAdapter}基本是一样的。
  * 它只是利用了{@link GroupedRecyclerViewAdapter}的
- * 删除一组里的所有子项{@link GroupedRecyclerViewAdapter#removeChildren(int)} 和
- * 插入一组里的所有子项{@link GroupedRecyclerViewAdapter#insertChildren(int)}
+ * 删除一组里的所有子项{@link GroupedRecyclerViewAdapter#notifyChildrenRemoved(int)}} 和
+ * 插入一组里的所有子项{@link GroupedRecyclerViewAdapter#notifyChildrenInserted(int)}
  * 两个方法达到列表的展开和收起的效果。
  * 这种列表类似于{@link ExpandableListView}的效果。
  * 这里我把列表的组尾去掉是为了效果上更像ExpandableListView。
@@ -122,9 +122,9 @@ public class ExpandableAdapter extends GroupedRecyclerViewAdapter {
         ExpandableGroupEntity entity = mGroups.get(groupPosition);
         entity.setExpand(true);
         if (animate) {
-            insertChildren(groupPosition);
+            notifyChildrenInserted(groupPosition);
         } else {
-            changeDataSet();
+            notifyDataChanged();
         }
     }
 
@@ -147,9 +147,9 @@ public class ExpandableAdapter extends GroupedRecyclerViewAdapter {
         ExpandableGroupEntity entity = mGroups.get(groupPosition);
         entity.setExpand(false);
         if (animate) {
-            removeChildren(groupPosition);
+            notifyChildrenRemoved(groupPosition);
         } else {
-            changeDataSet();
+            notifyDataChanged();
         }
     }
 }
