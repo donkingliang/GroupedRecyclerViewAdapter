@@ -1,6 +1,8 @@
 package com.donkingliang.groupedadapter.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -37,8 +39,15 @@ public abstract class GroupedRecyclerViewAdapter
     private boolean isDataChanged;
     private int mTempPosition;
 
+    private boolean mUseBinding;
+
     public GroupedRecyclerViewAdapter(Context context) {
+        this(context, false);
+    }
+
+    public GroupedRecyclerViewAdapter(Context context, boolean useBinding) {
         mContext = context;
+        mUseBinding = useBinding;
         registerAdapterDataObserver(new GroupDataObserver());
     }
 
@@ -76,8 +85,15 @@ public abstract class GroupedRecyclerViewAdapter
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(getLayoutId(mTempPosition, viewType), parent, false);
-        return new BaseViewHolder(view);
+        if (mUseBinding) {
+            ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
+                    getLayoutId(mTempPosition, viewType), parent, false);
+            return new BaseViewHolder(binding.getRoot());
+        } else {
+            View view = LayoutInflater.from(mContext).inflate(
+                    getLayoutId(mTempPosition, viewType), parent, false);
+            return new BaseViewHolder(view);
+        }
     }
 
     @Override

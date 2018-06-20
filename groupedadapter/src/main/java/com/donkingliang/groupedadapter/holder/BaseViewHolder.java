@@ -1,5 +1,7 @@
 package com.donkingliang.groupedadapter.holder;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +24,18 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
+     * 获取item对应的ViewDataBinding对象
+     *
+     * @param <T>
+     * @return
+     */
+    public <T extends ViewDataBinding> T getBinding() {
+        return DataBindingUtil.getBinding(this.itemView);
+    }
+
+    /**
      * 根据View Id 获取对应的View
+     *
      * @param viewId
      * @param <T>
      * @return

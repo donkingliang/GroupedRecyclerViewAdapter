@@ -23,7 +23,7 @@
         <activity android:name=".activity.ExpandableActivity" />
         <activity android:name=".activity.VariousActivity" />
         <activity android:name=".activity.VariousChildActivity" />
-
+        <activity android:name=".activity.BindingActivity" />
     </application>
 
 </manifest>

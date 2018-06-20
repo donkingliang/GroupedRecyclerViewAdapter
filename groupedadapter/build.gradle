@@ -12,6 +12,11 @@ android {
         versionCode 1
         versionName "1.1"
     }
+
+    dataBinding {
+        enabled true
+    }
+
     buildTypes {
         release {
             minifyEnabled false

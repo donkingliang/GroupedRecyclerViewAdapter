@@ -10,5 +10,6 @@
     <string name="expandable">可展开收起的列表</string>
     <string name="various">头、尾和子项都支持多种类型的列表</string>
     <string name="various_child">多种子项类型的列表</string>
+    <string name="binding_adapter">使用DataBinding的列表</string>
 
 </resources>
