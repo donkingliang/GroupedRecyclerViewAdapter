@@ -239,7 +239,7 @@ public final void notifyItemRangeRemoved(int positionStart, int itemCount);
 ```java
 	 //****** 刷新操作 *****//
 
-	//通知数据列表刷新。对应 notifyDataSetChanged();
+    //通知数据列表刷新。对应 notifyDataSetChanged();
     public void notifyDataChanged();
 
     //通知一组数据刷新，包括组头,组尾和子项
@@ -374,6 +374,7 @@ StickyHeaderLayout提供了一个设置是否显示悬浮吸顶的方法。
 ```
 
 **6、使用DataBinding**
+
 GroupedRecyclerViewAdapter在1.3.0版本加入了对DataBinding的支持。要想在Adapter中使用DataBinding，只需要在GroupedRecyclerViewAdapter的构造函数的useBinding参数传true即可。
 ```java
 public class BindingAdapter extends GroupedRecyclerViewAdapter {
