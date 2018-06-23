@@ -33,7 +33,7 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 在Module的build.gradle在添加以下代码
 
 ```
-	compile 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.2.2'
+	compile 'com.github.donkingliang:GroupedRecyclerViewAdapter:1.3.0'
 ```
 
 **2、继承GroupedRecyclerViewAdapter**
@@ -239,76 +239,76 @@ public final void notifyItemRangeRemoved(int positionStart, int itemCount);
 ```java
 	 //****** 刷新操作 *****//
 
-	//刷新数据列表。对应 notifyDataSetChanged();
-    public void changeDataSet();
+    //通知数据列表刷新。对应 notifyDataSetChanged();
+    public void notifyDataChanged();
 
-    //刷新一组数据，包括组头,组尾和子项
-    public void changeGroup(int groupPosition);
+    //通知一组数据刷新，包括组头,组尾和子项
+    public void notifyGroupChanged(int groupPosition);
 
-    //刷新多组数据，包括组头,组尾和子项
-    public void changeRangeGroup(int groupPosition, int count);
+    //通知多组数据刷新，包括组头,组尾和子项
+    public void notifyGroupRangeChanged(int groupPosition, int count);
 
-    // 刷新组头
-    public void changeHeader(int groupPosition);
+    // 通知组头刷新
+    public void notifyHeaderChanged(int groupPosition);
 
-    //刷新组尾
-    public void changeFooter(int groupPosition);
+    // 通知组尾刷新
+    public void notifyFooterChanged(int groupPosition);
 
-    // 刷新一组里的某个子项
-    public void changeChild(int groupPosition, int childPosition);
+    // 通知一组里的某个子项刷新
+    public void notifyChildChanged(int groupPosition, int childPosition);
 
-    //刷新一组里的多个子项
-    public void changeRangeChild(int groupPosition, int childPosition, int count);
+    // 通知一组里的多个子项刷新
+    public void notifyChildRangeChanged(int groupPosition, int childPosition, int count);
 
-    // 刷新一组里的所有子项
-    public void changeChildren(int groupPosition);
+    // 通知一组里的所有子项刷新
+    public void notifyChildrenChanged(int groupPosition);
 
     //****** 删除操作 *****//
-    // 删除所有数据
-    public void removeAll();
+    // 通知所有数据删除
+    public void notifyDataRemoved();
 
-    //删除一组数据，包括组头,组尾和子项
-    public void removeGroup(int groupPosition);
+    // 通知一组数据删除，包括组头,组尾和子项
+    public void notifyGroupRemoved(int groupPosition);
 
-    // 删除多组数据，包括组头,组尾和子项
-    public void removeRangeGroup(int groupPosition, int count);
+    // 通知多组数据删除，包括组头,组尾和子项
+    public void notifyGroupRangeRemoved(int groupPosition, int count);
 
-    // 删除组头
-    public void removeHeader(int groupPosition);
+    // 通知组头删除
+    public void notifyHeaderRemoved(int groupPosition);
 
-    // 删除组尾
-    public void removeFooter(int groupPosition);
+    // 通知组尾删除
+    public void notifyFooterRemoved(int groupPosition);
 
-    //删除一组里的某个子项
-    public void removeChild(int groupPosition, int childPosition);
+    // 通知一组里的某个子项删除
+    public void notifyChildRemoved(int groupPosition, int childPosition);
 
-    // 删除一组里的多个子项
-    public void removeRangeChild(int groupPosition, int childPosition, int count);
+    // 通知一组里的多个子项删除
+    public void notifyChildRangeRemoved(int groupPosition, int childPosition, int count);
 
-    //删除一组里的所有子项
-    public void removeChildren(int groupPosition);
+    // 通知一组里的所有子项删除
+    public void notifyChildrenRemoved(int groupPosition);
     
     //****** 插入操作 *****//
-    // 插入一组数据
-    public void insertGroup(int groupPosition);
+    // 通知一组数据插入
+    public void notifyGroupInserted(int groupPosition);
 
-    //插入一组数据
-    public void insertRangeGroup(int groupPosition, int count);
+    // 通知多组数据插入
+    public void notifyGroupRangeInserted(int groupPosition, int count);
 
-    //插入组头
-    public void insertHeader(int groupPosition);
+    // 通知组头插入
+    public void notifyHeaderInserted(int groupPosition);
     
-    // 插入组尾
-    public void insertFooter(int groupPosition);
+    // 通知组尾插入
+    public void notifyFooterInserted(int groupPosition);
 
-    //插入一个子项到组里
-    public void insertChild(int groupPosition, int childPosition);
+    // 通知一个子项到组里插入
+    public void notifyChildInserted(int groupPosition, int childPosition);
 
-    // 插入一组里的多个子项
-    public void insertRangeChild(int groupPosition, int childPosition, int count);
+    // 通知一组里的多个子项插入
+    public void notifyChildRangeInserted(int groupPosition, int childPosition, int count);
 
-    //插入一组里的所有子项
-    public void insertChildren(int groupPosition);
+    // 通知一组里的所有子项插入
+    public void notifyChildrenInserted(int groupPosition);
 ```
 
 **3、使用GridLayoutManager的注意**
@@ -372,5 +372,39 @@ StickyHeaderLayout提供了一个设置是否显示悬浮吸顶的方法。
 	//是否吸顶，默认为true。
 	stickyLayout.setSticky(true);
 ```
+
+**6、使用DataBinding**
+
+GroupedRecyclerViewAdapter在1.3.0版本加入了对DataBinding的支持。要想在Adapter中使用DataBinding，只需要在GroupedRecyclerViewAdapter的构造函数的useBinding参数传true即可。
+```java
+public class BindingAdapter extends GroupedRecyclerViewAdapter {
+
+    public BindingAdapter(Context context) {
+    	//只要在这里传true，Adapter就会用DataBinding的方式加载列表的item布局。默认为false。
+        super(context, true);
+    }
+}
+```
+然后同过BaseViewHolder的getBinding()就可以获取到item对应的ViewDataBinding对象。
+```java
+    @Override
+    public void onBindHeaderViewHolder(BaseViewHolder holder, int groupPosition) {
+    	//获取ViewDataBinding对象。
+        AdapterBindingHeaderBinding binding = holder.getBinding();
+    }
+
+    @Override
+    public void onBindFooterViewHolder(BaseViewHolder holder, int groupPosition) {
+    	//获取ViewDataBinding对象。
+        AdapterBindingFooterBinding binding = holder.getBinding();
+    }
+
+    @Override
+    public void onBindChildViewHolder(BaseViewHolder holder, int groupPosition, int childPosition) {
+    	//获取ViewDataBinding对象。
+        AdapterBindingChildBinding binding = holder.getBinding();
+    }
+```
+
 
 
