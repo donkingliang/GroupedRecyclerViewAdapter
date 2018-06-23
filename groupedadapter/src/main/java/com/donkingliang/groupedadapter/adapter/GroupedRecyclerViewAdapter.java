@@ -379,7 +379,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 刷新数据列表
+     * 通知数据列表刷新
      */
     public void notifyDataChanged() {
         isDataChanged = true;
@@ -397,7 +397,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 刷新一组数据，包括组头,组尾和子项
+     * 通知一组数据刷新，包括组头,组尾和子项
      *
      * @param groupPosition
      */
@@ -421,7 +421,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 刷新多组数据，包括组头,组尾和子项
+     * 通知多组数据刷新，包括组头,组尾和子项
      *
      * @param groupPosition
      */
@@ -449,7 +449,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 刷新组头
+     * 通知组头刷新
      *
      * @param groupPosition
      */
@@ -471,7 +471,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 刷新组尾
+     * 通知组尾刷新
      *
      * @param groupPosition
      */
@@ -494,7 +494,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 刷新一组里的某个子项
+     * 通知一组里的某个子项刷新
      *
      * @param groupPosition
      * @param childPosition
@@ -519,7 +519,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 刷新一组里的多个子项
+     * 通知一组里的多个子项刷新
      *
      * @param groupPosition
      * @param childPosition
@@ -550,7 +550,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 刷新一组里的所有子项
+     * 通知一组里的所有子项刷新
      *
      * @param groupPosition
      */
@@ -575,7 +575,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 删除所有数据
+     * 通知所有数据删除
      */
     public void notifyDataRemoved() {
         notifyItemRangeRemoved(0, getItemCount());
@@ -591,7 +591,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 删除一组数据，包括组头,组尾和子项
+     * 通知一组数据删除，包括组头,组尾和子项
      *
      * @param groupPosition
      */
@@ -614,7 +614,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 删除多组数据，包括组头,组尾和子项
+     * 通知多组数据删除，包括组头,组尾和子项
      *
      * @param groupPosition
      */
@@ -642,7 +642,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 删除组头
+     * 通知组头删除
      *
      * @param groupPosition
      */
@@ -667,7 +667,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 删除组尾
+     * 通知组尾删除
      *
      * @param groupPosition
      */
@@ -693,7 +693,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 删除一组里的某个子项
+     * 通知一组里的某个子项删除
      *
      * @param groupPosition
      * @param childPosition
@@ -721,7 +721,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 删除一组里的多个子项
+     * 通知一组里的多个子项删除
      *
      * @param groupPosition
      * @param childPosition
@@ -755,7 +755,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 删除一组里的所有子项
+     * 通知一组里的所有子项删除
      *
      * @param groupPosition
      */
@@ -785,7 +785,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 插入一组数据
+     * 通知一组数据插入
      *
      * @param groupPosition
      */
@@ -819,7 +819,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 插入一组数据
+     * 通知多组数据插入
      *
      * @param groupPosition
      * @param count
@@ -858,7 +858,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 插入组头
+     * 通知组头插入
      *
      * @param groupPosition
      */
@@ -883,7 +883,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 插入组尾
+     * 通知组尾插入
      *
      * @param groupPosition
      */
@@ -909,7 +909,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 插入一个子项到组里
+     * 通知一个子项到组里插入
      *
      * @param groupPosition
      * @param childPosition
@@ -942,7 +942,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 插入一组里的多个子项
+     * 通知一组里的多个子项插入
      *
      * @param groupPosition
      * @param childPosition
@@ -979,7 +979,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
-     * 插入一组里的所有子项
+     * 通知一组里的所有子项插入
      *
      * @param groupPosition
      */
