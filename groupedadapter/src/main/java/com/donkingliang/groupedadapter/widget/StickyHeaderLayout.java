@@ -17,6 +17,8 @@ import android.widget.FrameLayout;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 
+import java.lang.reflect.Method;
+
 /**
  * Depiction:头部吸顶布局。只要用StickyHeaderLayout包裹{@link RecyclerView},
  * 并且使用{@link GroupedRecyclerViewAdapter},就可以实现列表头部吸顶功能。
@@ -106,6 +108,7 @@ public class StickyHeaderLayout extends FrameLayout {
 
     /**
      * 更新吸顶布局。
+     *
      * @param imperative 是否强制更新。
      */
     private void updateStickyView(boolean imperative) {
@@ -203,13 +206,13 @@ public class StickyHeaderLayout extends FrameLayout {
         }
     }
 
-    private void updateStickyViewDelayed(){
+    private void updateStickyViewDelayed() {
         postDelayed(new Runnable() {
             @Override
             public void run() {
                 updateStickyView(true);
             }
-        },100);
+        }, 100);
     }
 
     /**
@@ -287,10 +290,10 @@ public class StickyHeaderLayout extends FrameLayout {
         int firstVisibleItem = -1;
         RecyclerView.LayoutManager layout = mRecyclerView.getLayoutManager();
         if (layout != null) {
-            if (layout instanceof LinearLayoutManager) {
-                firstVisibleItem = ((LinearLayoutManager) layout).findFirstVisibleItemPosition();
-            } else if (layout instanceof GridLayoutManager) {
+            if (layout instanceof GridLayoutManager) {
                 firstVisibleItem = ((GridLayoutManager) layout).findFirstVisibleItemPosition();
+            } else if (layout instanceof LinearLayoutManager) {
+                firstVisibleItem = ((LinearLayoutManager) layout).findFirstVisibleItemPosition();
             } else if (layout instanceof StaggeredGridLayoutManager) {
                 int[] firstPositions = new int[((StaggeredGridLayoutManager) layout).getSpanCount()];
                 ((StaggeredGridLayoutManager) layout).findFirstVisibleItemPositions(firstPositions);
@@ -336,5 +339,48 @@ public class StickyHeaderLayout extends FrameLayout {
                 }
             }
         }
+    }
+
+    @Override
+    protected int computeVerticalScrollOffset() {
+        if (mRecyclerView != null) {
+            try {
+                Method method = View.class.getDeclaredMethod("computeVerticalScrollOffset");
+                method.setAccessible(true);
+                return (int) method.invoke(mRecyclerView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return super.computeVerticalScrollOffset();
+    }
+
+
+    @Override
+    protected int computeVerticalScrollRange() {
+        if (mRecyclerView != null) {
+            try {
+                Method method = View.class.getDeclaredMethod("computeVerticalScrollRange");
+                method.setAccessible(true);
+                return (int) method.invoke(mRecyclerView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return super.computeVerticalScrollRange();
+    }
+
+    @Override
+    protected int computeVerticalScrollExtent() {
+        if (mRecyclerView != null) {
+            try {
+                Method method = View.class.getDeclaredMethod("computeVerticalScrollExtent");
+                method.setAccessible(true);
+                return (int) method.invoke(mRecyclerView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return super.computeVerticalScrollExtent();
     }
 }
