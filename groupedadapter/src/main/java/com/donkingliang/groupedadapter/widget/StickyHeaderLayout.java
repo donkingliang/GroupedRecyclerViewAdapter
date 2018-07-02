@@ -383,4 +383,22 @@ public class StickyHeaderLayout extends FrameLayout {
         }
         return super.computeVerticalScrollExtent();
     }
+
+    @Override
+    public void scrollBy(int x, int y) {
+        if (mRecyclerView != null) {
+            mRecyclerView.scrollBy(x,y);
+        } else {
+            super.scrollBy(x, y);
+        }
+    }
+
+    @Override
+    public void scrollTo(int x, int y) {
+        if (mRecyclerView != null) {
+            mRecyclerView.scrollTo(x,y);
+        } else {
+            super.scrollTo(x, y);
+        }
+    }
 }
