@@ -269,7 +269,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @return 子项下标 childPosition
      */
     public int getChildPositionForPosition(int groupPosition, int position) {
-        if (groupPosition < mStructures.size()) {
+        if (groupPosition >= 0 && groupPosition < mStructures.size()) {
             int itemCount = countGroupRangeItem(0, groupPosition + 1);
             GroupStructure structure = mStructures.get(groupPosition);
             int p = structure.getChildrenCount() - (itemCount - position)
@@ -288,7 +288,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @return 下标
      */
     public int getPositionForGroupHeader(int groupPosition) {
-        if (groupPosition < mStructures.size()) {
+        if (groupPosition >= 0 && groupPosition < mStructures.size()) {
             GroupStructure structure = mStructures.get(groupPosition);
             if (!structure.hasHeader()) {
                 return -1;
@@ -305,7 +305,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @return 下标
      */
     public int getPositionForGroupFooter(int groupPosition) {
-        if (groupPosition < mStructures.size()) {
+        if (groupPosition >= 0 && groupPosition < mStructures.size()) {
             GroupStructure structure = mStructures.get(groupPosition);
             if (!structure.hasFooter()) {
                 return -1;
@@ -323,7 +323,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @return 下标
      */
     public int getPositionForChild(int groupPosition, int childPosition) {
-        if (groupPosition < mStructures.size()) {
+        if (groupPosition >= 0 && groupPosition < mStructures.size()) {
             GroupStructure structure = mStructures.get(groupPosition);
             if (structure.getChildrenCount() > childPosition) {
                 int itemCount = countGroupRangeItem(0, groupPosition);
@@ -341,7 +341,7 @@ public abstract class GroupedRecyclerViewAdapter
      */
     public int countGroupItem(int groupPosition) {
         int itemCount = 0;
-        if (groupPosition < mStructures.size()) {
+        if (groupPosition >= 0 && groupPosition < mStructures.size()) {
             GroupStructure structure = mStructures.get(groupPosition);
             if (structure.hasHeader()) {
                 itemCount += 1;
@@ -555,7 +555,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @param groupPosition
      */
     public void notifyChildrenChanged(int groupPosition) {
-        if (groupPosition < mStructures.size()) {
+        if (groupPosition >= 0 && groupPosition < mStructures.size()) {
             int index = getPositionForChild(groupPosition, 0);
             if (index >= 0) {
                 GroupStructure structure = mStructures.get(groupPosition);
@@ -826,7 +826,7 @@ public abstract class GroupedRecyclerViewAdapter
      */
     public void notifyGroupRangeInserted(int groupPosition, int count) {
         ArrayList<GroupStructure> list = new ArrayList<>();
-        for (int i = groupPosition; i < count; i++) {
+        for (int i = 0; i < count; i++) {
             GroupStructure structure = new GroupStructure(hasHeader(i),
                     hasFooter(i), getChildrenCount(i));
             list.add(structure);
