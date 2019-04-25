@@ -3,10 +3,6 @@ package com.donkingliang.groupedadapterdemo.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +11,11 @@ import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapterdemo.adapter.VariousAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.donkingliang.groupedadapterdemo.model.GroupModel;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 头、尾和子项都支持多种类型的分组列表

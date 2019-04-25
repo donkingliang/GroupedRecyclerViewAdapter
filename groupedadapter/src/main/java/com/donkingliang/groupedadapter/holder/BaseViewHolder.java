@@ -1,14 +1,15 @@
 package com.donkingliang.groupedadapter.holder;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 通用的RecyclerView.ViewHolder。提供了根据viewId获取View的方法。

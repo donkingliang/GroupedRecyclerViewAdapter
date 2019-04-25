@@ -1,10 +1,11 @@
 package com.donkingliang.groupedadapterdemo.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.donkingliang.groupedadapterdemo.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 

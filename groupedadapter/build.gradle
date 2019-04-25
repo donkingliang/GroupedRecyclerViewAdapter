@@ -3,12 +3,10 @@ apply plugin: 'com.android.library'
 group='com.github.donkingliang' // 指定group，com.github.<用户名>
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
-
+    compileSdkVersion 28
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "1.1"
     }
@@ -26,10 +24,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    //compileOnly
-    provided 'com.android.support:recyclerview-v7:25.3.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    compileOnly 'androidx.recyclerview:recyclerview:1.0.0'
 }
 
 //---------------------------------------------

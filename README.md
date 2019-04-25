@@ -361,7 +361,7 @@ BaseViewHolder是可以通用的，在普通的Adapter中也可以使用，可�
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

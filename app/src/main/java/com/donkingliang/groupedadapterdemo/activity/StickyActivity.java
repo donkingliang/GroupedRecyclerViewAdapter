@@ -3,10 +3,6 @@ package com.donkingliang.groupedadapterdemo.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +13,11 @@ import com.donkingliang.groupedadapter.widget.StickyHeaderLayout;
 import com.donkingliang.groupedadapterdemo.R;
 import com.donkingliang.groupedadapterdemo.adapter.NoFooterAdapter;
 import com.donkingliang.groupedadapterdemo.model.GroupModel;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 没有组头的分组列表。

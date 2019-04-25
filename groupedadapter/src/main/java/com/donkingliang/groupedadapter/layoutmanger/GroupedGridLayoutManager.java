@@ -1,10 +1,11 @@
 package com.donkingliang.groupedadapter.layoutmanger;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
 
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
+
+import androidx.recyclerview.widget.GridLayoutManager;
 
 
 /**

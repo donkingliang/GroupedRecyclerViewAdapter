@@ -1,10 +1,6 @@
 package com.donkingliang.groupedadapter.adapter;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +10,11 @@ import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.donkingliang.groupedadapter.structure.GroupStructure;
 
 import java.util.ArrayList;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * 通用的分组列表Adapter。通过它可以很方便的实现列表的分组效果。
