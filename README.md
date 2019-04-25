@@ -35,7 +35,7 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 ```
 	implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.0.0'
 ```
-**注意：**从2.0.0版本开始，GroupedRecyclerViewAdapter的依赖迁移至Androidx。如果你的项目还没有迁移或使用Androidx，可以使用1.3.2版本。
+**注意：** 从2.0.0版本开始，GroupedRecyclerViewAdapter的依赖迁移至Androidx。如果你的项目还没有迁移或使用Androidx，可以使用1.3.2版本。
 
 **2、继承GroupedRecyclerViewAdapter**
 
