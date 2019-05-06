@@ -15,15 +15,15 @@
         android:textColor="@android:color/white"
         android:textSize="22sp" />
 
-    <com.donkingliang.groupedadapter.widget.StickyHeaderLayout
-        android:id="@+id/sticky_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<com.donkingliang.groupedadapter.widget.StickyHeaderLayout-->
+        <!--android:id="@+id/sticky_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.donkingliang.groupedadapter.widget.StickyHeaderLayout>
+    <!--</com.donkingliang.groupedadapter.widget.StickyHeaderLayout>-->
 
 </LinearLayout>
