@@ -1,7 +1,6 @@
 package com.donkingliang.groupedadapter.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,7 +159,6 @@ public abstract class GroupedRecyclerViewAdapter
     public int getItemCount() {
         if (isDataChanged) {
             structureChanged();
-            Log.e("eee", "---");
         }
         return count();
     }
