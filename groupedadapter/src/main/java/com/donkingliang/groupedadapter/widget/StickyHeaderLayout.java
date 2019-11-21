@@ -107,6 +107,13 @@ public class StickyHeaderLayout extends FrameLayout {
     }
 
     /**
+     * 强制更新吸顶布局。
+     */
+    public void updateStickyView() {
+        updateStickyView(true);
+    }
+
+    /**
      * 更新吸顶布局。
      *
      * @param imperative 是否强制更新。
@@ -212,7 +219,7 @@ public class StickyHeaderLayout extends FrameLayout {
             public void run() {
                 updateStickyView(true);
             }
-        }, 100);
+        }, 64);
     }
 
     /**
