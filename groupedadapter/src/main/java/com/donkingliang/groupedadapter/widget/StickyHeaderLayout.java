@@ -108,6 +108,13 @@ public class StickyHeaderLayout extends FrameLayout {
     }
 
     /**
+     * 强制更新吸顶布局。
+     */
+    public void updateStickyView() {
+        updateStickyView(true);
+    }
+
+    /**
      * 更新吸顶布局。
      *
      * @param imperative 是否强制更新。
@@ -213,7 +220,7 @@ public class StickyHeaderLayout extends FrameLayout {
             public void run() {
                 updateStickyView(true);
             }
-        }, 100);
+        }, 64);
     }
 
     /**
@@ -388,7 +395,7 @@ public class StickyHeaderLayout extends FrameLayout {
     @Override
     public void scrollBy(int x, int y) {
         if (mRecyclerView != null) {
-            mRecyclerView.scrollBy(x,y);
+            mRecyclerView.scrollBy(x, y);
         } else {
             super.scrollBy(x, y);
         }
@@ -397,7 +404,7 @@ public class StickyHeaderLayout extends FrameLayout {
     @Override
     public void scrollTo(int x, int y) {
         if (mRecyclerView != null) {
-            mRecyclerView.scrollTo(x,y);
+            mRecyclerView.scrollTo(x, y);
         } else {
             super.scrollTo(x, y);
         }

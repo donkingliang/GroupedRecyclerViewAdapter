@@ -1,6 +1,7 @@
 package com.donkingliang.groupedadapter.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +71,7 @@ public abstract class GroupedRecyclerViewAdapter
 
     private boolean isStaggeredGridLayout(RecyclerView.ViewHolder holder) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
-        if (layoutParams != null && layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+        if (layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
             return true;
         }
         return false;
@@ -100,15 +101,18 @@ public abstract class GroupedRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         int type = judgeType(position);
-        final int groupPosition = getGroupPositionForPosition(position);
+        int groupPosition = getGroupPositionForPosition(position);
         if (type == TYPE_HEADER) {
             if (mOnHeaderClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (mOnHeaderClickListener != null) {
-                            mOnHeaderClickListener.onHeaderClick(GroupedRecyclerViewAdapter.this,
-                                    (BaseViewHolder) holder, groupPosition);
+                            int gPosition = getGroupPositionForPosition(holder.getLayoutPosition());
+                            if (gPosition >= 0 && gPosition < mStructures.size()) {
+                                mOnHeaderClickListener.onHeaderClick(GroupedRecyclerViewAdapter.this,
+                                        (BaseViewHolder) holder, gPosition);
+                            }
                         }
                     }
                 });
@@ -120,22 +124,30 @@ public abstract class GroupedRecyclerViewAdapter
                     @Override
                     public void onClick(View v) {
                         if (mOnFooterClickListener != null) {
-                            mOnFooterClickListener.onFooterClick(GroupedRecyclerViewAdapter.this,
-                                    (BaseViewHolder) holder, groupPosition);
+                            int gPosition = getGroupPositionForPosition(holder.getLayoutPosition());
+                            if (gPosition >= 0 && gPosition < mStructures.size()) {
+                                mOnFooterClickListener.onFooterClick(GroupedRecyclerViewAdapter.this,
+                                        (BaseViewHolder) holder, gPosition);
+                            }
                         }
                     }
                 });
             }
             onBindFooterViewHolder((BaseViewHolder) holder, groupPosition);
         } else if (type == TYPE_CHILD) {
-            final int childPosition = getChildPositionForPosition(groupPosition, position);
+            int childPosition = getChildPositionForPosition(groupPosition, position);
             if (mOnChildClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (mOnChildClickListener != null) {
-                            mOnChildClickListener.onChildClick(GroupedRecyclerViewAdapter.this,
-                                    (BaseViewHolder) holder, groupPosition, childPosition);
+                            int gPosition = getGroupPositionForPosition(holder.getLayoutPosition());
+                            int cPosition = getChildPositionForPosition(gPosition, holder.getLayoutPosition());
+                            if (gPosition >= 0 && gPosition < mStructures.size() && cPosition >= 0
+                                    && cPosition < mStructures.get(gPosition).getChildrenCount()) {
+                                mOnChildClickListener.onChildClick(GroupedRecyclerViewAdapter.this,
+                                        (BaseViewHolder) holder, gPosition, cPosition);
+                            }
                         }
                     }
                 });
@@ -148,6 +160,7 @@ public abstract class GroupedRecyclerViewAdapter
     public int getItemCount() {
         if (isDataChanged) {
             structureChanged();
+            Log.e("eee", "---");
         }
         return count();
     }
@@ -283,6 +296,21 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * 获取一个组的开始下标，这个下标可能是组头，可能是子项(如果没有组头)或者组尾(如果这个组只有组尾)
+     *
+     * @param groupPosition 组下标
+     * @return
+     */
+    public int getPositionForGroup(int groupPosition) {
+        if (groupPosition >= 0 && groupPosition < mStructures.size()) {
+            return countGroupRangeItem(0, groupPosition);
+        } else {
+            return -1;
+        }
+
+    }
+
+    /**
      * 获取一个组的组头下标 如果该组没有组头 返回-1
      *
      * @param groupPosition 组下标
@@ -403,7 +431,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @param groupPosition
      */
     public void notifyGroupChanged(int groupPosition) {
-        int index = getPositionForGroupHeader(groupPosition);
+        int index = getPositionForGroup(groupPosition);
         int itemCount = countGroupItem(groupPosition);
         if (index >= 0 && itemCount > 0) {
             notifyItemRangeChanged(index, itemCount);
@@ -427,7 +455,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @param groupPosition
      */
     public void notifyGroupRangeChanged(int groupPosition, int count) {
-        int index = getPositionForGroupHeader(groupPosition);
+        int index = getPositionForGroup(groupPosition);
         int itemCount = 0;
         if (groupPosition + count <= mStructures.size()) {
             itemCount = countGroupRangeItem(groupPosition, groupPosition + count);
@@ -579,8 +607,9 @@ public abstract class GroupedRecyclerViewAdapter
      * 通知所有数据删除
      */
     public void notifyDataRemoved() {
-        notifyItemRangeRemoved(0, getItemCount());
+        int count = countGroupRangeItem(0, mStructures.size());
         mStructures.clear();
+        notifyItemRangeRemoved(0, count);
     }
 
     /**
@@ -597,12 +626,11 @@ public abstract class GroupedRecyclerViewAdapter
      * @param groupPosition
      */
     public void notifyGroupRemoved(int groupPosition) {
-        int index = getPositionForGroupHeader(groupPosition);
+        int index = getPositionForGroup(groupPosition);
         int itemCount = countGroupItem(groupPosition);
         if (index >= 0 && itemCount > 0) {
-            notifyItemRangeRemoved(index, itemCount);
-            notifyItemRangeChanged(index, getItemCount() - itemCount);
             mStructures.remove(groupPosition);
+            notifyItemRangeRemoved(index, itemCount);
         }
     }
 
@@ -620,7 +648,7 @@ public abstract class GroupedRecyclerViewAdapter
      * @param groupPosition
      */
     public void notifyGroupRangeRemoved(int groupPosition, int count) {
-        int index = getPositionForGroupHeader(groupPosition);
+        int index = getPositionForGroup(groupPosition);
         int itemCount = 0;
         if (groupPosition + count <= mStructures.size()) {
             itemCount = countGroupRangeItem(groupPosition, groupPosition + count);
@@ -628,9 +656,8 @@ public abstract class GroupedRecyclerViewAdapter
             itemCount = countGroupRangeItem(groupPosition, mStructures.size());
         }
         if (index >= 0 && itemCount > 0) {
-            notifyItemRangeRemoved(index, itemCount);
-            notifyItemRangeChanged(index, getItemCount() - itemCount);
             mStructures.remove(groupPosition);
+            notifyItemRangeRemoved(index, itemCount);
         }
     }
 
@@ -651,9 +678,8 @@ public abstract class GroupedRecyclerViewAdapter
         int index = getPositionForGroupHeader(groupPosition);
         if (index >= 0) {
             GroupStructure structure = mStructures.get(groupPosition);
-            notifyItemRemoved(index);
-            notifyItemRangeChanged(index, getItemCount() - index);
             structure.setHasHeader(false);
+            notifyItemRemoved(index);
         }
     }
 
@@ -676,9 +702,8 @@ public abstract class GroupedRecyclerViewAdapter
         int index = getPositionForGroupFooter(groupPosition);
         if (index >= 0) {
             GroupStructure structure = mStructures.get(groupPosition);
-            notifyItemRemoved(index);
-            notifyItemRangeChanged(index, getItemCount() - index);
             structure.setHasFooter(false);
+            notifyItemRemoved(index);
         }
     }
 
@@ -703,9 +728,8 @@ public abstract class GroupedRecyclerViewAdapter
         int index = getPositionForChild(groupPosition, childPosition);
         if (index >= 0) {
             GroupStructure structure = mStructures.get(groupPosition);
-            notifyItemRemoved(index);
-            notifyItemRangeChanged(index, getItemCount() - index);
             structure.setChildrenCount(structure.getChildrenCount() - 1);
+            notifyItemRemoved(index);
         }
     }
 
@@ -738,9 +762,8 @@ public abstract class GroupedRecyclerViewAdapter
                 if (childCount < childPosition + count) {
                     removeCount = childCount - childPosition;
                 }
-                notifyItemRangeRemoved(index, removeCount);
-                notifyItemRangeChanged(index, getItemCount() - removeCount);
                 structure.setChildrenCount(childCount - removeCount);
+                notifyItemRangeRemoved(index, removeCount);
             }
         }
     }
@@ -766,9 +789,8 @@ public abstract class GroupedRecyclerViewAdapter
             if (index >= 0) {
                 GroupStructure structure = mStructures.get(groupPosition);
                 int itemCount = structure.getChildrenCount();
-                notifyItemRangeRemoved(index, itemCount);
-                notifyItemRangeChanged(index, getItemCount() - itemCount);
                 structure.setChildrenCount(0);
+                notifyItemRangeRemoved(index, itemCount);
             }
         }
     }
@@ -804,7 +826,6 @@ public abstract class GroupedRecyclerViewAdapter
         int itemCount = countGroupItem(groupPosition);
         if (itemCount > 0) {
             notifyItemRangeInserted(index, itemCount);
-            notifyItemRangeChanged(index + itemCount, getItemCount() - index);
         }
     }
 
@@ -844,7 +865,6 @@ public abstract class GroupedRecyclerViewAdapter
         int itemCount = countGroupRangeItem(groupPosition, count);
         if (itemCount > 0) {
             notifyItemRangeInserted(index, itemCount);
-            notifyItemRangeChanged(index + itemCount, getItemCount() - index);
         }
     }
 
@@ -869,7 +889,6 @@ public abstract class GroupedRecyclerViewAdapter
             structure.setHasHeader(true);
             int index = countGroupRangeItem(0, groupPosition);
             notifyItemInserted(index);
-            notifyItemRangeChanged(index + 1, getItemCount() - index);
         }
     }
 
@@ -894,7 +913,6 @@ public abstract class GroupedRecyclerViewAdapter
             structure.setHasFooter(true);
             int index = countGroupRangeItem(0, groupPosition + 1);
             notifyItemInserted(index);
-            notifyItemRangeChanged(index + 1, getItemCount() - index);
         }
     }
 
@@ -926,7 +944,6 @@ public abstract class GroupedRecyclerViewAdapter
             }
             structure.setChildrenCount(structure.getChildrenCount() + 1);
             notifyItemInserted(index);
-            notifyItemRangeChanged(index + 1, getItemCount() - index);
         }
     }
 
@@ -964,7 +981,6 @@ public abstract class GroupedRecyclerViewAdapter
             if (count > 0) {
                 structure.setChildrenCount(structure.getChildrenCount() + count);
                 notifyItemRangeInserted(index, count);
-                notifyItemRangeChanged(index + count, getItemCount() - index);
             }
         }
     }
@@ -995,7 +1011,6 @@ public abstract class GroupedRecyclerViewAdapter
             if (itemCount > 0) {
                 structure.setChildrenCount(itemCount);
                 notifyItemRangeInserted(index, itemCount);
-                notifyItemRangeChanged(index + itemCount, getItemCount() - index);
             }
         }
     }
