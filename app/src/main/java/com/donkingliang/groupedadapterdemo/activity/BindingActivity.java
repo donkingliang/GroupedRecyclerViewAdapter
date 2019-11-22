@@ -14,7 +14,6 @@ import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.donkingliang.groupedadapterdemo.R;
 import com.donkingliang.groupedadapterdemo.adapter.BindingAdapter;
-import com.donkingliang.groupedadapterdemo.adapter.GroupedListAdapter;
 import com.donkingliang.groupedadapterdemo.model.GroupModel;
 
 /**
