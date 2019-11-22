@@ -31,7 +31,7 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 在Module的build.gradle在添加以下代码
 
 ```
-	implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.0.0'
+	implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.1.0'
 ```
 **注意：** 从2.0.0版本开始，GroupedRecyclerViewAdapter的依赖迁移至Androidx。如果你的项目还没有迁移或使用Androidx，可以使用1.3.2版本。
 
@@ -309,6 +309,7 @@ public final void notifyItemRangeRemoved(int positionStart, int itemCount);
     // 通知一组里的所有子项插入
     public void notifyChildrenInserted(int groupPosition);
 ```
+***注意：*** GroupedRecyclerViewAdapter不管理列表数据源，在调用notifyxxxRemoved或者notifyxxxInserted等方法刷新列表前，请相应的刷新数据源。也就是说，对数据的操作应该写在对列表的刷新前。
 
 **3、使用GridLayoutManager的注意**
 
