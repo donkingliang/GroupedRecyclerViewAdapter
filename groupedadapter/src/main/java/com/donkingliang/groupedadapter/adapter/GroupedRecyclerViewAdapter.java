@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.FrameLayout;
 
 import com.donkingliang.groupedadapter.R;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
@@ -100,14 +102,15 @@ public abstract class GroupedRecyclerViewAdapter
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         int type = judgeType(position);
-        int groupPosition = getGroupPositionForPosition(position);
+        final int groupPosition = getGroupPositionForPosition(position);
         if (type == TYPE_HEADER) {
             if (mOnHeaderClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (mOnHeaderClickListener != null) {
-                            int gPosition = getGroupPositionForPosition(holder.getLayoutPosition());
+                            ViewParent parent = holder.itemView.getParent();
+                            int gPosition = parent instanceof FrameLayout ? groupPosition : getGroupPositionForPosition(holder.getLayoutPosition());
                             if (gPosition >= 0 && gPosition < mStructures.size()) {
                                 mOnHeaderClickListener.onHeaderClick(GroupedRecyclerViewAdapter.this,
                                         (BaseViewHolder) holder, gPosition);
