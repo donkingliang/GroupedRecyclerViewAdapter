@@ -30,6 +30,7 @@ public abstract class GroupedRecyclerViewAdapter
     public static final int TYPE_HEADER = R.integer.type_header;
     public static final int TYPE_FOOTER = R.integer.type_footer;
     public static final int TYPE_CHILD = R.integer.type_child;
+    public static final int TYPE_EMPTY = R.integer.type_empty;
 
     private OnHeaderClickListener mOnHeaderClickListener;
     private OnFooterClickListener mOnFooterClickListener;
@@ -43,6 +44,9 @@ public abstract class GroupedRecyclerViewAdapter
     private int mTempPosition;
 
     private boolean mUseBinding;
+
+    // 是否显示空布局
+    private boolean showEmptyView = false;
 
     public GroupedRecyclerViewAdapter(Context context) {
         this(context, false);
@@ -79,7 +83,7 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     private void handleLayoutIfStaggeredGridLayout(RecyclerView.ViewHolder holder, int position) {
-        if (judgeType(position) == TYPE_HEADER || judgeType(position) == TYPE_FOOTER) {
+        if (isEmptyPosition(position) || judgeType(position) == TYPE_HEADER || judgeType(position) == TYPE_FOOTER) {
             StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams)
                     holder.itemView.getLayoutParams();
             p.setFullSpan(true);
@@ -88,14 +92,18 @@ public abstract class GroupedRecyclerViewAdapter
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mUseBinding) {
-            ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
-                    getLayoutId(mTempPosition, viewType), parent, false);
-            return new BaseViewHolder(binding.getRoot());
+        if (viewType == TYPE_EMPTY){
+            return new BaseViewHolder(getEmptyView(parent));
         } else {
-            View view = LayoutInflater.from(mContext).inflate(
-                    getLayoutId(mTempPosition, viewType), parent, false);
-            return new BaseViewHolder(view);
+            if (mUseBinding) {
+                ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
+                        getLayoutId(mTempPosition, viewType), parent, false);
+                return new BaseViewHolder(binding.getRoot());
+            } else {
+                View view = LayoutInflater.from(mContext).inflate(
+                        getLayoutId(mTempPosition, viewType), parent, false);
+                return new BaseViewHolder(view);
+            }
         }
     }
 
@@ -163,11 +171,28 @@ public abstract class GroupedRecyclerViewAdapter
         if (isDataChanged) {
             structureChanged();
         }
-        return count();
+
+        int count = count();
+        if (count > 0) {
+            return count;
+        } else if (showEmptyView) {
+            // 显示空布局
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public boolean isEmptyPosition(int position) {
+        return position == 0 && showEmptyView && count() == 0;
     }
 
     @Override
     public int getItemViewType(int position) {
+        if (isEmptyPosition(position)) {
+            // 空布局
+            return TYPE_EMPTY;
+        }
         mTempPosition = position;
         int groupPosition = getGroupPositionForPosition(position);
         int type = judgeType(position);
@@ -242,8 +267,7 @@ public abstract class GroupedRecyclerViewAdapter
             }
         }
 
-        throw new IndexOutOfBoundsException("can't determine the item type of the position." +
-                "position = " + position + ",item count = " + getItemCount());
+        return TYPE_EMPTY;
     }
 
     /**
@@ -396,6 +420,21 @@ public abstract class GroupedRecyclerViewAdapter
             itemCount += countGroupItem(i);
         }
         return itemCount;
+    }
+
+    /**
+     * 设置空布局显示。默认不显示
+     * @param isShow
+     */
+    public void showEmptyView(boolean isShow){
+        if (isShow != showEmptyView){
+            showEmptyView = isShow;
+            notifyDataChanged();
+        }
+    }
+
+    public boolean isShowEmptyView(){
+        return showEmptyView;
     }
 
     //****** 刷新操作 *****//
@@ -1065,6 +1104,16 @@ public abstract class GroupedRecyclerViewAdapter
 
     public abstract void onBindChildViewHolder(BaseViewHolder holder,
                                                int groupPosition, int childPosition);
+
+    /**
+     * 获取空布局
+     * @param parent
+     * @return
+     */
+    public View getEmptyView(ViewGroup parent){
+        View view = LayoutInflater.from(mContext).inflate(R.layout.group_adapter_default_empty_view, parent, false);
+        return view;
+    }
 
     class GroupDataObserver extends RecyclerView.AdapterDataObserver {
 

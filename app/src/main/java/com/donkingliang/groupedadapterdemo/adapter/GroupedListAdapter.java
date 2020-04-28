@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
 
-    private ArrayList<GroupEntity> mGroups;
+    protected ArrayList<GroupEntity> mGroups;
 
     public GroupedListAdapter(Context context, ArrayList<GroupEntity> groups) {
         super(context);
@@ -31,6 +31,16 @@ public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
     public int getChildrenCount(int groupPosition) {
         ArrayList<ChildEntity> children = mGroups.get(groupPosition).getChildren();
         return children == null ? 0 : children.size();
+    }
+
+    public void clear(){
+        mGroups.clear();
+        notifyDataChanged();
+    }
+
+    public void setGroups(ArrayList<GroupEntity> groups){
+        mGroups = groups;
+        notifyDataChanged();
     }
 
     @Override

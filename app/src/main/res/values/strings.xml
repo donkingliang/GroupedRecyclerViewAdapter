@@ -11,5 +11,8 @@
     <string name="various">头、尾和子项都支持多种类型的列表</string>
     <string name="various_child">多种子项类型的列表</string>
     <string name="binding_adapter">使用DataBinding的列表</string>
+    <string name="empty_list">空布局</string>
+    <string name="empty_view">这是个空布局</string>
+    <string name="load_data">加载数据</string>
 
 </resources>
