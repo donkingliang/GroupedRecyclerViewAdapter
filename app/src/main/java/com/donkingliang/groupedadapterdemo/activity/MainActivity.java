@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_various).setOnClickListener(this);
         findViewById(R.id.btn_various_child).setOnClickListener(this);
         findViewById(R.id.btn_binding_adapter).setOnClickListener(this);
+        findViewById(R.id.btn_empty_list).setOnClickListener(this);
     }
 
     @Override
@@ -67,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_binding_adapter:
                 BindingActivity.openActivity(this);
+                break;
+
+            case R.id.btn_empty_list:
+                EmptyActivity.openActivity(this);
                 break;
         }
     }
