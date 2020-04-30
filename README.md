@@ -2,6 +2,8 @@
 
 GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，并且每个组都可以包含组头、组尾和子项；可以方便实现多种Type类型的列表，可以实现如QQ联系人的列表一样的列表展开收起功能，还可以实现头部悬浮吸顶功能等。下面先让我们看一下它所能够实现的一些效果：
 
+### 效果图
+
 ![分组的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E5%88%86%E7%BB%84%E7%9A%84%E5%88%97%E8%A1%A8.jpg) ![不带组尾的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E4%B8%8D%E5%B8%A6%E7%BB%84%E5%B0%BE%E7%9A%84%E5%88%97%E8%A1%A8.jpg) ![不带组头的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E4%B8%8D%E5%B8%A6%E7%BB%84%E5%A4%B4%E7%9A%84%E5%88%97%E8%A1%A8.jpg) ![子项为Grid的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E5%AD%90%E9%A1%B9%E4%B8%BAGrid%E7%9A%84%E5%88%97%E8%A1%A8.jpg) ![子项为Grid的列表(各组子项的Span不同)](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E5%AD%90%E9%A1%B9%E4%B8%BAGrid%E7%9A%84%E5%88%97%E8%A1%A8(%E5%90%84%E7%BB%84%E5%AD%90%E9%A1%B9%E7%9A%84Span%E4%B8%8D%E5%90%8C).jpg) ![头、尾和子项都支持多种类型的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E5%A4%B4%E3%80%81%E5%B0%BE%E5%92%8C%E5%AD%90%E9%A1%B9%E9%83%BD%E6%94%AF%E6%8C%81%E5%A4%9A%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%88%97%E8%A1%A8.jpg)  
 
 ![多种子项类型的列表](https://github.com/donkingliang/GroupedRecyclerViewAdapter/blob/master/GroupedRecyclerViewAdapter%E6%BC%94%E7%A4%BA%E5%9B%BE/%E5%A4%9A%E7%A7%8D%E5%AD%90%E9%A1%B9%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%88%97%E8%A1%A8.jpg)
@@ -16,7 +18,7 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 
 以上展示的只是GroupedRecyclerViewAdapter能实现的一些常用效果，其实使用GroupedRecyclerViewAdapter还可以很容易的实现一些更加复杂的列表效果。在我的GroupedRecyclerViewAdapter项目的Demo中给出了上面几种效果的实现例子，并且有详细的注释说明，有兴趣的同学可以到我的GitHub下载源码。下面直接讲解GroupedRecyclerViewAdapter的使用。
 
-**1、引入依赖** 
+### 引入依赖 
 
 在Project的build.gradle在添加以下代码
 
@@ -31,18 +33,20 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 在Module的build.gradle在添加以下代码
 
 ```
-	implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.2.0'
+	implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.3.0'
 ```
-**注意：** 从2.0.0版本开始，GroupedRecyclerViewAdapter的依赖迁移至Androidx。如果你的项目还没有迁移或使用Androidx，可以使用1.3.7版本。
+**注意：** 从2.0.0版本开始，GroupedRecyclerViewAdapter的依赖迁移至Androidx。如果你的项目还没有迁移或使用Androidx，可以使用1.4.1版本。
 
-**2、继承GroupedRecyclerViewAdapter**
+### 基本使用
+
+**1、继承GroupedRecyclerViewAdapter**
 
 ```java
 public class GroupedListAdapter extends GroupedRecyclerViewAdapter {
 }
 ```
 
-**3、实现GroupedRecyclerViewAdapter里的方法**
+**2、实现GroupedRecyclerViewAdapter里的方法**
 
 GroupedRecyclerViewAdapter是一个抽象类，它提供了一系列需要子类去实现的方法。
 
@@ -90,7 +94,7 @@ GroupedRecyclerViewAdapter是一个抽象类，它提供了一系列需要子类
 	//返回子项的viewType。
     public int getChildViewType(int groupPosition, int childPosition) ;
 ```
-**4、设置点击事件的监听**
+**3、设置点击事件的监听**
 
 GroupedRecyclerViewAdapter提供了对列表的点击事件的监听方法。
 
@@ -111,7 +115,25 @@ GroupedRecyclerViewAdapter提供了对列表的点击事件的监听方法。
     }
 ```
 
-####  **注意事项：**
+**4、设置空布局**
+
+GroupedRecyclerViewAdapter提供设置空布局的功能，如果列表没有数据的情况下可以显示一个空布局。
+```java
+// 显示空布局。默认不显示
+adapter.showEmptyView(true);
+```
+框架提供的默认空布局比较简单，可以通过复写getEmptyView自定义空布局
+```java
+    @Override
+    public View getEmptyView(ViewGroup parent) {
+    // 返回自定义空布局
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_empty_view, parent, false);
+        return view;
+    }
+```
+框架只提供空布局的设置方法，不会管理空布局。所以如果你的空布局有点击事件等其他的业务逻辑，也需要自己在这个方法实现。
+
+###  注意事项
 
 **1、对方法重写的注意。**
 
