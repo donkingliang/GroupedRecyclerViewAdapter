@@ -40,7 +40,7 @@ public abstract class AbsGroupedLinearItemDecoration extends RecyclerView.ItemDe
 
         LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
         int orientation = layoutManager.getOrientation();
-        int itemCount = layoutManager.getItemCount();
+//        int itemCount = layoutManager.getItemCount();
 
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {

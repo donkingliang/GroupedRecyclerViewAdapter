@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.donkingliang.groupedadapterdemo.R;
@@ -21,7 +20,6 @@ import com.donkingliang.groupedadapterdemo.model.GroupModel;
  */
 public class ExpandableActivity extends AppCompatActivity {
 
-    private TextView tvTitle;
     private RecyclerView rvList;
 
     @Override
@@ -29,10 +27,7 @@ public class ExpandableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
-
-        tvTitle.setText(R.string.expandable);
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
         ExpandableAdapter adapter = new ExpandableAdapter(this, GroupModel.getExpandableGroups(10, 5));

@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
@@ -20,7 +19,6 @@ import com.donkingliang.groupedadapterdemo.adapter.EmptyAdapter;
  */
 public class EmptyActivity extends AppCompatActivity {
 
-    private TextView tvTitle;
     private RecyclerView rvList;
     private EmptyAdapter adapter;
 
@@ -29,10 +27,7 @@ public class EmptyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
-
-        tvTitle.setText(R.string.empty_list);
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
         adapter = new EmptyAdapter(this, null);

@@ -9,7 +9,7 @@ import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
  * @Description
  * @Date 2020/7/7
  */
-class GroupedGridItemDecoration extends AbsGroupedGridItemDecoration {
+public class GroupedGridItemDecoration extends AbsGroupedGridItemDecoration {
 
     private int mHeaderDividerSize;
 

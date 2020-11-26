@@ -42,7 +42,7 @@ public abstract class AbsGroupedGridItemDecoration extends RecyclerView.ItemDeco
         }
 
         final int childCount = parent.getChildCount();
-
+//
         GridLayoutManager.SpanSizeLookup spanSizeLookup = layoutManager.getSpanSizeLookup();
         int spanCount = layoutManager.getSpanCount();
         int itemCount = layoutManager.getItemCount();
@@ -57,7 +57,7 @@ public abstract class AbsGroupedGridItemDecoration extends RecyclerView.ItemDeco
             int childPosition = mAdapter.getChildPositionForPosition(groupPosition, position);
 
             Drawable columnDivider = getColumnDividerForType(itemType, groupPosition, childPosition, orientation);
-            boolean hasRightDivider = columnDivider != null;
+            boolean hasRightDivider = columnDivider != null && !isRightItem(position, spanCount, itemCount, spanSizeLookup, orientation);
             if (hasRightDivider) {
                 final int right = mBounds.right + Math.round(child.getTranslationX());
                 final int left = right - getColumnDividerSizeForType(itemType, groupPosition, childPosition, orientation);
@@ -69,7 +69,7 @@ public abstract class AbsGroupedGridItemDecoration extends RecyclerView.ItemDeco
             boolean hasBottomDivider = rowDivider != null;
             if (hasBottomDivider) {
                 final int bottom = mBounds.bottom + Math.round(child.getTranslationY());
-                final int top = bottom - getColumnDividerSizeForType(itemType, groupPosition, childPosition, orientation);
+                final int top = bottom - getRowDividerSizeForType(itemType, groupPosition, childPosition, orientation);
                 rowDivider.setBounds(mBounds.left, top, mBounds.right, bottom);
                 rowDivider.draw(canvas);
             }
@@ -95,7 +95,11 @@ public abstract class AbsGroupedGridItemDecoration extends RecyclerView.ItemDeco
         int itemType = mAdapter.judgeType(position);
         int groupPosition = mAdapter.getGroupPositionForPosition(position);
         int childPosition = mAdapter.getChildPositionForPosition(groupPosition, position);
-        int right = getColumnDividerSizeForType(itemType, groupPosition, childPosition, orientation);
+
+        int right = 0;
+        if (!isRightItem(position, spanCount, itemCount, spanSizeLookup, orientation)){
+            right = getColumnDividerSizeForType(itemType, groupPosition, childPosition, orientation);
+        }
 
         int bottom = getRowDividerSizeForType(itemType, groupPosition, childPosition, orientation);
 
@@ -145,15 +149,15 @@ public abstract class AbsGroupedGridItemDecoration extends RecyclerView.ItemDeco
     private Drawable getColumnDividerForType(int itemType, int groupPosition, int childPosition, int orientation) {
         if (itemType == GroupedRecyclerViewAdapter.TYPE_HEADER) {
             if (orientation == RecyclerView.VERTICAL) {
-                return getHeaderDivider(groupPosition);
-            } else {
                 return null;
+            } else {
+                return getHeaderDivider(groupPosition);
             }
         } else if (itemType == GroupedRecyclerViewAdapter.TYPE_FOOTER) {
             if (orientation == RecyclerView.VERTICAL) {
-                return getFooterDivider(groupPosition);
-            } else {
                 return null;
+            } else {
+                return getFooterDivider(groupPosition);
             }
         } else if (itemType == GroupedRecyclerViewAdapter.TYPE_CHILD) {
             return getChildColumnDivider(groupPosition, childPosition);
@@ -165,15 +169,15 @@ public abstract class AbsGroupedGridItemDecoration extends RecyclerView.ItemDeco
     private int getColumnDividerSizeForType(int itemType, int groupPosition, int childPosition, int orientation) {
         if (itemType == GroupedRecyclerViewAdapter.TYPE_HEADER) {
             if (orientation == RecyclerView.VERTICAL) {
-                return getHeaderDividerSize(groupPosition);
-            } else {
                 return 0;
+            } else {
+                return getHeaderDividerSize(groupPosition);
             }
         } else if (itemType == GroupedRecyclerViewAdapter.TYPE_FOOTER) {
             if (orientation == RecyclerView.VERTICAL) {
-                return getFooterDividerSize(groupPosition);
-            } else {
                 return 0;
+            } else {
+                return getFooterDividerSize(groupPosition);
             }
         } else if (itemType == GroupedRecyclerViewAdapter.TYPE_CHILD) {
             return getChildColumnDividerSize(groupPosition, childPosition);

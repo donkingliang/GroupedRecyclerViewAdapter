@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
@@ -23,7 +22,6 @@ import com.donkingliang.groupedadapterdemo.model.GroupModel;
  */
 public class StickyActivity extends AppCompatActivity {
 
-    private TextView tvTitle;
     private RecyclerView rvList;
     private StickyHeaderLayout stickyLayout;
 
@@ -32,11 +30,8 @@ public class StickyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sticky_list);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
         stickyLayout = (StickyHeaderLayout) findViewById(R.id.sticky_layout);
-
-        tvTitle.setText(R.string.sticky_list);
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
         NoFooterAdapter adapter = new NoFooterAdapter(this, GroupModel.getGroups(10, 5));

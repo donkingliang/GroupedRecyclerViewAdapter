@@ -38,31 +38,31 @@ public class GroupedLinearItemDecoration extends AbsGroupedLinearItemDecoration 
 
     @Override
     public int getChildDividerSize(int groupPosition, int ChildPosition) {
-        return mHeaderDividerSize;
-    }
-
-    @Override
-    public Drawable getChildDivider(int groupPosition, int ChildPosition) {
-        return mHeaderDivider;
-    }
-
-    @Override
-    public int getHeaderDividerSize(int groupPosition) {
-        return mFooterDividerSize;
-    }
-
-    @Override
-    public Drawable getHeaderDivider(int groupPosition) {
-        return mFooterDivider;
-    }
-
-    @Override
-    public int getFooterDividerSize(int groupPosition) {
         return mChildDividerSize;
     }
 
     @Override
-    public Drawable getFooterDivider(int groupPosition) {
+    public Drawable getChildDivider(int groupPosition, int ChildPosition) {
         return mChildDivider;
+    }
+
+    @Override
+    public int getHeaderDividerSize(int groupPosition) {
+        return mHeaderDividerSize;
+    }
+
+    @Override
+    public Drawable getHeaderDivider(int groupPosition) {
+        return mHeaderDivider;
+    }
+
+    @Override
+    public int getFooterDividerSize(int groupPosition) {
+        return mFooterDividerSize;
+    }
+
+    @Override
+    public Drawable getFooterDivider(int groupPosition) {
+        return mFooterDivider;
     }
 }

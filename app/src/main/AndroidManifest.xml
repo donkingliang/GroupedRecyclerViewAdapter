@@ -8,23 +8,47 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.StickyActivity" />
-        <activity android:name=".activity.GroupedListActivity" />
-        <activity android:name=".activity.NoHeaderActivity" />
-        <activity android:name=".activity.NoFooterActivity" />
-        <activity android:name=".activity.Grid1Activity" />
-        <activity android:name=".activity.Grid2Activity" />
-        <activity android:name=".activity.ExpandableActivity" />
-        <activity android:name=".activity.VariousActivity" />
-        <activity android:name=".activity.VariousChildActivity" />
-        <activity android:name=".activity.BindingActivity" />
-        <activity android:name=".activity.EmptyActivity" />
+        <activity
+            android:name=".activity.StickyActivity"
+            android:label="@string/sticky_list" />
+        <activity
+            android:name=".activity.GroupedListActivity"
+            android:label="@string/group_list" />
+        <activity
+            android:name=".activity.NoHeaderActivity"
+            android:label="@string/no_header" />
+        <activity
+            android:name=".activity.NoFooterActivity"
+            android:label="@string/no_footer" />
+        <activity
+            android:name=".activity.Grid1Activity"
+            android:label="@string/grid_children_1" />
+        <activity
+            android:name=".activity.Grid2Activity"
+            android:label="@string/grid_children_2" />
+        <activity
+            android:name=".activity.ExpandableActivity"
+            android:label="@string/expandable" />
+        <activity
+            android:name=".activity.VariousActivity"
+            android:label="@string/various" />
+        <activity
+            android:name=".activity.VariousChildActivity"
+            android:label="@string/various_child" />
+        <activity
+            android:name=".activity.BindingActivity"
+            android:label="@string/binding_adapter" />
+        <activity
+            android:name=".activity.EmptyActivity"
+            android:label="@string/empty_list" />
     </application>
 
 </manifest>

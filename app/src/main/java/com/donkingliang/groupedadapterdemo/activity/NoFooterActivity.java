@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.donkingliang.groupedadapterdemo.R;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
@@ -21,7 +20,6 @@ import com.donkingliang.groupedadapterdemo.model.GroupModel;
  */
 public class NoFooterActivity extends AppCompatActivity {
 
-    private TextView tvTitle;
     private RecyclerView rvList;
 
     @Override
@@ -29,10 +27,7 @@ public class NoFooterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
-
-        tvTitle.setText(R.string.no_footer);
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
         NoFooterAdapter adapter = new NoFooterAdapter(this, GroupModel.getGroups(10, 5));

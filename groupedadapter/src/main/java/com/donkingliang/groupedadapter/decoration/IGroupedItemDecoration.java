@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
  * @Description
  * @Date 2020/7/6
  */
-public abstract interface IGroupedItemDecoration {
+public interface IGroupedItemDecoration {
 
     int getHeaderDividerSize(int groupPosition);
 
