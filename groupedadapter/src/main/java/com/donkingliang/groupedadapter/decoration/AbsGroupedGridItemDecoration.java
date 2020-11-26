@@ -42,7 +42,7 @@ public abstract class AbsGroupedGridItemDecoration extends RecyclerView.ItemDeco
         }
 
         final int childCount = parent.getChildCount();
-//
+
         GridLayoutManager.SpanSizeLookup spanSizeLookup = layoutManager.getSpanSizeLookup();
         int spanCount = layoutManager.getSpanCount();
         int itemCount = layoutManager.getItemCount();

@@ -40,7 +40,6 @@ public abstract class AbsGroupedLinearItemDecoration extends RecyclerView.ItemDe
 
         LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
         int orientation = layoutManager.getOrientation();
-//        int itemCount = layoutManager.getItemCount();
 
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -50,12 +49,6 @@ public abstract class AbsGroupedLinearItemDecoration extends RecyclerView.ItemDe
             int groupPosition = mAdapter.getGroupPositionForPosition(position);
             int childPosition = mAdapter.getChildPositionForPosition(groupPosition, position);
             Drawable divider = getDividerForType(itemType, groupPosition, childPosition, orientation);
-
-//
-//            // 最后的item是否显示Divider
-//            if (!isShowLastDivider() && isLastItem(position, itemCount)) {
-//                continue;
-//            }
 
             if (divider != null) {
                 parent.getDecoratedBoundsWithMargins(child, mBounds);
@@ -92,12 +85,6 @@ public abstract class AbsGroupedLinearItemDecoration extends RecyclerView.ItemDe
         int itemType = mAdapter.judgeType(position);
         int groupPosition = mAdapter.getGroupPositionForPosition(position);
         int childPosition = mAdapter.getChildPositionForPosition(groupPosition, position);
-
-//        // 最后的item是否显示Divider
-//        if (!isShowLastDivider() && isLastItem(position, itemCount)) {
-//            outRect.set(0, 0, 0, 0);
-//            return;
-//        }
 
         int dividerSize = getDividerSizeForType(itemType, groupPosition, childPosition, orientation);
 
