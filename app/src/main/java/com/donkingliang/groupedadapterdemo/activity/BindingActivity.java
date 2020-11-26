@@ -3,7 +3,6 @@ package com.donkingliang.groupedadapterdemo.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
@@ -22,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class BindingActivity extends AppCompatActivity {
 
-    private TextView tvTitle;
     private RecyclerView rvList;
 
     @Override
@@ -30,10 +28,7 @@ public class BindingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
-
-        tvTitle.setText(R.string.binding_adapter);
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
         BindingAdapter adapter = new BindingAdapter(this, GroupModel.getGroups(10, 5));

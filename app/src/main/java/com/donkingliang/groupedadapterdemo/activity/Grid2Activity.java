@@ -3,14 +3,13 @@ package com.donkingliang.groupedadapterdemo.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.donkingliang.groupedadapterdemo.R;
-import com.donkingliang.groupedadapterdemo.adapter.GroupedListAdapter;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
 import com.donkingliang.groupedadapter.layoutmanger.GroupedGridLayoutManager;
+import com.donkingliang.groupedadapterdemo.R;
+import com.donkingliang.groupedadapterdemo.adapter.GroupedListAdapter;
 import com.donkingliang.groupedadapterdemo.model.GroupModel;
 
 import androidx.annotation.Nullable;
@@ -24,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class Grid2Activity extends AppCompatActivity {
 
-    private TextView tvTitle;
     private RecyclerView rvList;
 
     @Override
@@ -32,10 +30,7 @@ public class Grid2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
 
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
-
-        tvTitle.setText(R.string.grid_children_2);
 
         GroupedListAdapter adapter = new GroupedListAdapter(this, GroupModel.getGroups(10, 10));
         adapter.setOnHeaderClickListener(new GroupedRecyclerViewAdapter.OnHeaderClickListener() {

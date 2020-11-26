@@ -4,17 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@android:color/white"
-        android:textSize="22sp" />
-
     <com.donkingliang.groupedadapter.widget.StickyHeaderLayout
         android:id="@+id/sticky_layout"
         android:layout_width="match_parent"

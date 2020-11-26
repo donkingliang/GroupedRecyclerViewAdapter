@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/none"
+        android:orderInCategory="100"
+        android:title="无分割线" />
+
+    <item
+        android:id="@+id/space"
+        android:orderInCategory="100"
+        android:title="空白分割线" />
+
+    <item
+        android:id="@+id/ordinary"
+        android:orderInCategory="100"
+        android:title="普通分割线" />
+
+    <item
+        android:id="@+id/custom"
+        android:orderInCategory="100"
+        android:title="自定义分割线" />
+
+</menu>
