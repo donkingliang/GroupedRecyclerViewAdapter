@@ -33,9 +33,15 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 在Module的build.gradle在添加以下代码
 
 ```
-	implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.3.0'
+
+// 使用了Androidx
+
+implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.0'
+
+// 使用Android support包
+
+implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.0-support'
 ```
-**注意：** 从2.0.0版本开始，GroupedRecyclerViewAdapter的依赖迁移至Androidx。如果你的项目还没有迁移或使用Androidx，可以使用1.4.1版本。
 
 ### 基本使用
 
@@ -132,6 +138,87 @@ adapter.showEmptyView(true);
     }
 ```
 框架只提供空布局的设置方法，不会管理空布局。所以如果你的空布局有点击事件等其他的业务逻辑，也需要自己在这个方法实现。
+
+**使用ItemDecoration**
+
+从2.4.0版本开始，支持使用ItemDecoration。之前一直没有对GroupedRecyclerViewAdapter提供ItemDecoration的支持，是因为对于分组的列表，每个分组的ItemDecoration和组头、组尾的ItemDecoration都应该是可以单独设置样式的。这对于自定义ItemDecoration的实现比较麻烦，而且难以实现统一的设置和扩展方式。后来我实现了一个自定义ItemDecoration的库：[VariedItemDecoration](https://github.com/donkingliang/VariedItemDecoration)。使用VariedItemDecoration可以实现在一个列表里显示多种不同样式的ItemDecoration，并且可以非常简单的实现自定义ItemDecoration。基于VariedItemDecoration的实现基础，我实现了多样式ItemDecoration的分组管理，使ItemDecoration可以使用于GroupedRecyclerViewAdapter列表。我在库里提供了可直接使用的GroupedLinearItemDecoration/GroupedGridItemDecoration和用于自定义ItemDecoration的基类AbsGroupedLinearItemDecoration/AbsGroupedGridItemDecoration。
+
+下面我以线性列表为例，说明ItemDecoration使用。
+
+```java
+// 空白分割线，只需要设置分割线大小，不需要设置样式，divider为空则只添加间隔，不绘制样式
+GroupedLinearItemDecoration itemDecoration = new GroupedLinearItemDecoration(adapter,20, null,20,null,20,null);
+
+// 普通分割线，设置分割线大小和头、尾、子项的分割线样式
+GroupedLinearItemDecoration itemDecoration = new GroupedLinearItemDecoration(adapter,20, mHeaderDivider,20,mFooterDivider,20,mChildDivider);
+
+// 自定义分割线，可以根据需要设置每个item的分割线大小和样式
+CustomLinearItemDecoration itemDecoration = new CustomLinearItemDecoration(this,adapter);
+
+// 添加分割线
+recyclerView.addItemDecoration(itemDecoration);
+
+// 自定义分割线
+public class CustomLinearItemDecoration extends AbsGroupedLinearItemDecoration {
+
+    private Drawable headerDivider;
+    private Drawable footerDivider;
+    private Drawable childDivider1;
+    private Drawable childDivider2;
+
+    public CustomLinearItemDecoration(Context context,GroupedRecyclerViewAdapter adapter) {
+        super(adapter);
+
+        headerDivider = context.getResources().getDrawable(R.drawable.green_divider);
+        footerDivider = context.getResources().getDrawable(R.drawable.purple_divider);
+        childDivider1 = context.getResources().getDrawable(R.drawable.pink_divider);
+        childDivider2 = context.getResources().getDrawable(R.drawable.orange_divider);
+    }
+
+    @Override
+    public int getChildDividerSize(int groupPosition, int ChildPosition) {
+        // 根据position返回分割线的大小
+        return 20;
+    }
+
+    @Override
+    public Drawable getChildDivider(int groupPosition, int ChildPosition) {
+        // 根据position返回Drawable 可以为null
+        if(groupPosition % 2 == 0){
+            return childDivider1;
+        } else {
+            return childDivider2;
+        }
+    }
+
+    @Override
+    public int getHeaderDividerSize(int groupPosition) {
+        // 根据position返回分割线的大小
+        return 30;
+    }
+
+    @Override
+    public Drawable getHeaderDivider(int groupPosition) {
+        // 根据position返回Drawable 可以为null
+        return headerDivider;
+    }
+
+    @Override
+    public int getFooterDividerSize(int groupPosition) {
+        // 根据position返回分割线的大小
+        return 30;
+    }
+
+    @Override
+    public Drawable getFooterDivider(int groupPosition) {
+        // 根据position返回Drawable 可以为null
+        return footerDivider;
+    }
+}
+```
+对于网格列表的ItemDecoration，使用也是一样的，大家可以看我demo中的例子。
+
+如果你想在普通的RecyclerView中使用这种多样式的ItemDecoration，请使用[VariedItemDecoration](https://github.com/donkingliang/VariedItemDecoration)。
 
 ###  注意事项
 
