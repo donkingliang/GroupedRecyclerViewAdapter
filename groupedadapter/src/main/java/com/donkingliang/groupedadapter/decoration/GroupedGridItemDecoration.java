@@ -28,19 +28,19 @@ public class GroupedGridItemDecoration extends AbsGroupedGridItemDecoration {
     private Drawable mChildColumnDivider;
 
     public GroupedGridItemDecoration(GroupedRecyclerViewAdapter adapter,
-                                     int mHeaderDividerSize, Drawable mHeaderDivider,
-                                     int mFooterDividerSize, Drawable mFooterDivider,
-                                     int mChildRowDividerSize, Drawable mChildRowDivider,
-                                     int mChildColumnDividerSize, Drawable mChildColumnDivider) {
+                                     int headerDividerSize, Drawable headerDivider,
+                                     int footerDividerSize, Drawable footerDivider,
+                                     int childRowDividerSize, Drawable childRowDivider,
+                                     int childColumnDividerSize, Drawable childColumnDivider) {
         super(adapter);
-        this.mHeaderDividerSize = mHeaderDividerSize;
-        this.mHeaderDivider = mHeaderDivider;
-        this.mFooterDividerSize = mFooterDividerSize;
-        this.mFooterDivider = mFooterDivider;
-        this.mChildRowDividerSize = mChildRowDividerSize;
-        this.mChildRowDivider = mChildRowDivider;
-        this.mChildColumnDividerSize = mChildColumnDividerSize;
-        this.mChildColumnDivider = mChildColumnDivider;
+        this.mHeaderDividerSize = headerDividerSize;
+        this.mHeaderDivider = headerDivider;
+        this.mFooterDividerSize = footerDividerSize;
+        this.mFooterDivider = footerDivider;
+        this.mChildRowDividerSize = childRowDividerSize;
+        this.mChildRowDivider = childRowDivider;
+        this.mChildColumnDividerSize = childColumnDividerSize;
+        this.mChildColumnDivider = childColumnDivider;
     }
 
     @Override

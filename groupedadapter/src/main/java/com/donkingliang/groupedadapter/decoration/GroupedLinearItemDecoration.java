@@ -24,16 +24,16 @@ public class GroupedLinearItemDecoration extends AbsGroupedLinearItemDecoration 
     private Drawable mChildDivider;
 
     public GroupedLinearItemDecoration(GroupedRecyclerViewAdapter adapter,
-                                       int mHeaderDividerSize, Drawable mHeaderDivider,
-                                       int mFooterDividerSize, Drawable mFooterDivider,
-                                       int mChildDividerSize, Drawable mChildDivider) {
+                                       int headerDividerSize, Drawable headerDivider,
+                                       int footerDividerSize, Drawable footerDivider,
+                                       int childDividerSize, Drawable childDivider) {
         super(adapter);
-        this.mHeaderDividerSize = mHeaderDividerSize;
-        this.mHeaderDivider = mHeaderDivider;
-        this.mFooterDividerSize = mFooterDividerSize;
-        this.mFooterDivider = mFooterDivider;
-        this.mChildDividerSize = mChildDividerSize;
-        this.mChildDivider = mChildDivider;
+        this.mHeaderDividerSize = headerDividerSize;
+        this.mHeaderDivider = headerDivider;
+        this.mFooterDividerSize = footerDividerSize;
+        this.mFooterDivider = footerDivider;
+        this.mChildDividerSize = childDividerSize;
+        this.mChildDivider = childDivider;
     }
 
     @Override
