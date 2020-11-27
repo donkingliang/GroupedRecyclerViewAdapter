@@ -51,7 +51,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     //******** 提供对View、TextView、ImageView的常用设置方法 ******//
 
-    public BaseViewHolder setText(int viewId, String text) {
+    public BaseViewHolder setText(int viewId, CharSequence text) {
         TextView tv = get(viewId);
         tv.setText(text);
         return this;
@@ -69,7 +69,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public BaseViewHolder setTextSize(int viewId, int size) {
+    public BaseViewHolder setTextSize(int viewId, float size) {
         TextView view = get(viewId);
         view.setTextSize(size);
         return this;
