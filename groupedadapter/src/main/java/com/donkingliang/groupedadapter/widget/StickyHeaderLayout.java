@@ -173,6 +173,11 @@ public class StickyHeaderLayout extends FrameLayout {
                 }
             }
 
+            if (mRecyclerView.computeVerticalScrollOffset() == 0){
+                // 滑动到顶部
+                recycle();
+            }
+
             //这是是处理第一次打开时，吸顶布局已经添加到StickyLayout，但StickyLayout的高依然为0的情况。
             if (mStickyLayout.getChildCount() > 0 && mStickyLayout.getHeight() == 0) {
                 mStickyLayout.requestLayout();
@@ -248,6 +253,7 @@ public class StickyHeaderLayout extends FrameLayout {
      * 回收并移除吸顶布局
      */
     private void recycle() {
+        mCurrentStickyGroup = -1;
         if (mStickyLayout.getChildCount() > 0) {
             View view = mStickyLayout.getChildAt(0);
             mStickyViews.put((int) (view.getTag(VIEW_TAG_TYPE)),
