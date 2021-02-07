@@ -35,6 +35,9 @@ public abstract class GroupedRecyclerViewAdapter
     private OnHeaderClickListener mOnHeaderClickListener;
     private OnFooterClickListener mOnFooterClickListener;
     private OnChildClickListener mOnChildClickListener;
+    private OnHeaderLongClickListener mOnHeaderLongClickListener;
+    private OnFooterLongClickListener mOnFooterLongClickListener;
+    private OnChildLongClickListener mOnChildLongClickListener;
 
     protected Context mContext;
     //保存分组列表的组结构
@@ -92,7 +95,7 @@ public abstract class GroupedRecyclerViewAdapter
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_EMPTY){
+        if (viewType == TYPE_EMPTY) {
             return new BaseViewHolder(getEmptyView(parent));
         } else {
             if (mUseBinding) {
@@ -127,6 +130,23 @@ public abstract class GroupedRecyclerViewAdapter
                     }
                 });
             }
+
+            if (mOnHeaderLongClickListener != null) {
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (mOnHeaderLongClickListener != null) {
+                            ViewParent parent = holder.itemView.getParent();
+                            int gPosition = parent instanceof FrameLayout ? groupPosition : getGroupPositionForPosition(holder.getLayoutPosition());
+                            if (gPosition >= 0 && gPosition < mStructures.size()) {
+                                return mOnHeaderLongClickListener.onHeaderLongClick(GroupedRecyclerViewAdapter.this,
+                                        (BaseViewHolder) holder, gPosition);
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
             onBindHeaderViewHolder((BaseViewHolder) holder, groupPosition);
         } else if (type == TYPE_FOOTER) {
             if (mOnFooterClickListener != null) {
@@ -140,6 +160,22 @@ public abstract class GroupedRecyclerViewAdapter
                                         (BaseViewHolder) holder, gPosition);
                             }
                         }
+                    }
+                });
+            }
+
+            if (mOnFooterLongClickListener != null) {
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (mOnFooterLongClickListener != null) {
+                            int gPosition = getGroupPositionForPosition(holder.getLayoutPosition());
+                            if (gPosition >= 0 && gPosition < mStructures.size()) {
+                                return mOnFooterLongClickListener.onFooterLongClick(GroupedRecyclerViewAdapter.this,
+                                        (BaseViewHolder) holder, gPosition);
+                            }
+                        }
+                        return false;
                     }
                 });
             }
@@ -159,6 +195,24 @@ public abstract class GroupedRecyclerViewAdapter
                                         (BaseViewHolder) holder, gPosition, cPosition);
                             }
                         }
+                    }
+                });
+            }
+
+            if (mOnChildLongClickListener != null) {
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (mOnChildLongClickListener != null) {
+                            int gPosition = getGroupPositionForPosition(holder.getLayoutPosition());
+                            int cPosition = getChildPositionForPosition(gPosition, holder.getLayoutPosition());
+                            if (gPosition >= 0 && gPosition < mStructures.size() && cPosition >= 0
+                                    && cPosition < mStructures.get(gPosition).getChildrenCount()) {
+                                return mOnChildLongClickListener.onChildLongClick(GroupedRecyclerViewAdapter.this,
+                                        (BaseViewHolder) holder, gPosition, cPosition);
+                            }
+                        }
+                        return false;
                     }
                 });
             }
@@ -424,16 +478,17 @@ public abstract class GroupedRecyclerViewAdapter
 
     /**
      * 设置空布局显示。默认不显示
+     *
      * @param isShow
      */
-    public void showEmptyView(boolean isShow){
-        if (isShow != showEmptyView){
+    public void showEmptyView(boolean isShow) {
+        if (isShow != showEmptyView) {
             showEmptyView = isShow;
             notifyDataChanged();
         }
     }
 
-    public boolean isShowEmptyView(){
+    public boolean isShowEmptyView() {
         return showEmptyView;
     }
 
@@ -1076,6 +1131,33 @@ public abstract class GroupedRecyclerViewAdapter
     }
 
     /**
+     * 设置子项长按事件
+     *
+     * @param listener
+     */
+    public void setOnChildLongClickListener(OnChildLongClickListener listener) {
+        mOnChildLongClickListener = listener;
+    }
+
+    /**
+     * 设置组头长按事件
+     *
+     * @param listener
+     */
+    public void setOnHeaderLongClickListener(OnHeaderLongClickListener listener) {
+        mOnHeaderLongClickListener = listener;
+    }
+
+    /**
+     * 设置组尾长按事件
+     *
+     * @param listener
+     */
+    public void setOnFooterLongClickListener(OnFooterLongClickListener listener) {
+        mOnFooterLongClickListener = listener;
+    }
+
+    /**
      * 设置子项点击事件
      *
      * @param listener
@@ -1107,10 +1189,11 @@ public abstract class GroupedRecyclerViewAdapter
 
     /**
      * 获取空布局
+     *
      * @param parent
      * @return
      */
-    public View getEmptyView(ViewGroup parent){
+    public View getEmptyView(ViewGroup parent) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.group_adapter_default_empty_view, parent, false);
         return view;
     }
@@ -1150,5 +1233,18 @@ public abstract class GroupedRecyclerViewAdapter
     public interface OnChildClickListener {
         void onChildClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
                           int groupPosition, int childPosition);
+    }
+
+    public interface OnHeaderLongClickListener {
+        boolean onHeaderLongClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder, int groupPosition);
+    }
+
+    public interface OnFooterLongClickListener {
+        boolean onFooterLongClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder, int groupPosition);
+    }
+
+    public interface OnChildLongClickListener {
+        boolean onChildLongClick(GroupedRecyclerViewAdapter adapter, BaseViewHolder holder,
+                                 int groupPosition, int childPosition);
     }
 }
