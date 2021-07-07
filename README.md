@@ -36,11 +36,11 @@ GroupedRecyclerViewAdapter可以很方便的实现RecyclerView的分组显示，
 
 // 使用了Androidx
 
-implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.0'
+implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.1'
 
 // 使用Android support包
 
-implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.0-support'
+implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.1-support'
 ```
 
 ### 基本使用
