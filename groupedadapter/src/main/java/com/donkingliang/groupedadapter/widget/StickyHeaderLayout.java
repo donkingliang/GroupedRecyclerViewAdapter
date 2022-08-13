@@ -54,6 +54,8 @@ public class StickyHeaderLayout extends FrameLayout {
     //是否已经注册了adapter刷新监听
     private boolean isRegisterDataObserver = false;
 
+    private OnStickyChangedListener mListener;
+
     public StickyHeaderLayout(@NonNull Context context) {
         super(context);
         mContext = context;
@@ -123,6 +125,9 @@ public class StickyHeaderLayout extends FrameLayout {
         RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
         //只有RecyclerView的adapter是GroupedRecyclerViewAdapter的时候，才会添加吸顶布局。
         if (adapter instanceof GroupedRecyclerViewAdapter) {
+
+            int oldGroupIndex = mCurrentStickyGroup;
+
             GroupedRecyclerViewAdapter gAdapter = (GroupedRecyclerViewAdapter) adapter;
             registerAdapterDataObserver(gAdapter);
             //获取列表显示的第一个项。
@@ -173,18 +178,23 @@ public class StickyHeaderLayout extends FrameLayout {
                 }
             }
 
-            if (mRecyclerView.computeVerticalScrollOffset() == 0){
+            if (mRecyclerView.computeVerticalScrollOffset() == 0) {
                 // 滑动到顶部
                 recycle();
             }
 
-            //这是是处理第一次打开时，吸顶布局已经添加到StickyLayout，但StickyLayout的高依然为0的情况。
+            //这里是处理第一次打开时，吸顶布局已经添加到StickyLayout，但StickyLayout的高依然为0的情况。
             if (mStickyLayout.getChildCount() > 0 && mStickyLayout.getHeight() == 0) {
                 mStickyLayout.requestLayout();
             }
 
             //设置mStickyLayout的Y偏移量。
             mStickyLayout.setTranslationY(calculateOffset(gAdapter, firstVisibleItem, groupPosition + 1));
+
+            if (mListener != null && oldGroupIndex != mCurrentStickyGroup) {
+                // 吸顶的项改变了
+                mListener.onStickyChanged(oldGroupIndex, mCurrentStickyGroup);
+            }
         }
     }
 
@@ -358,13 +368,7 @@ public class StickyHeaderLayout extends FrameLayout {
     @Override
     protected int computeVerticalScrollOffset() {
         if (mRecyclerView != null) {
-            try {
-                Method method = View.class.getDeclaredMethod("computeVerticalScrollOffset");
-                method.setAccessible(true);
-                return (int) method.invoke(mRecyclerView);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            mRecyclerView.computeVerticalScrollOffset();
         }
         return super.computeVerticalScrollOffset();
     }
@@ -373,13 +377,7 @@ public class StickyHeaderLayout extends FrameLayout {
     @Override
     protected int computeVerticalScrollRange() {
         if (mRecyclerView != null) {
-            try {
-                Method method = View.class.getDeclaredMethod("computeVerticalScrollRange");
-                method.setAccessible(true);
-                return (int) method.invoke(mRecyclerView);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            mRecyclerView.computeVerticalScrollRange();
         }
         return super.computeVerticalScrollRange();
     }
@@ -387,13 +385,7 @@ public class StickyHeaderLayout extends FrameLayout {
     @Override
     protected int computeVerticalScrollExtent() {
         if (mRecyclerView != null) {
-            try {
-                Method method = View.class.getDeclaredMethod("computeVerticalScrollExtent");
-                method.setAccessible(true);
-                return (int) method.invoke(mRecyclerView);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            mRecyclerView.computeVerticalScrollExtent();
         }
         return super.computeVerticalScrollExtent();
     }
@@ -414,5 +406,22 @@ public class StickyHeaderLayout extends FrameLayout {
         } else {
             super.scrollTo(x, y);
         }
+    }
+
+    /**
+     * 监听吸顶项改变
+     *
+     * @param l
+     */
+    public void setOnStickyChangedListener(OnStickyChangedListener l) {
+        mListener = l;
+    }
+
+    public interface OnStickyChangedListener {
+        /**
+         * @param oldGroupIndex 旧的吸顶组下标，-1表示没有吸顶
+         * @param newGroupIndex 新的吸顶组下标，-1表示没有吸顶
+         */
+        void onStickyChanged(int oldGroupIndex, int newGroupIndex);
     }
 }
